@@ -29,6 +29,7 @@ app.get("/authorize", (req, res) => {
 app.get("/callback", (req, res) => {
 	// exchange the authorization code we just received for an access token
 	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/').then(result => {
+		console.log("result");
 		// use the access token to fetch the user's profile information
 		client.get("/profile.json", result.access_token).then(results => {
 		    person = "gotcha";
