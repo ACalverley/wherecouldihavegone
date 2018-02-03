@@ -1,17 +1,20 @@
 //use express
 var express = require("express");
 var passport = require('passport');
+var current_date = require("current-date");
 var FitbitApiClient = require("fitbit-node");
 var app = express();
+
+var date = current_date('date', '-');
     
 //all files to be rendered are ejs (no longer need .ejs at the end)
 app.set("view enginer", "ejs");
 
 app.use(express.static(__dirname + '/public'));
 
-// document.querySelector('.results').innerHTML = 'Hello World!';
-
-var person = "no name";
+var resPath = "activity/distance/date/";
+var timePeriod = "1m"; 
+var url;
 
 const client = new FitbitApiClient({
 	clientId: "22CLZZ",
@@ -28,17 +31,15 @@ app.get("/authorize", (req, res) => {
 // handle the callback from the Fitbit authorization flow
 app.get("/userdata", (req, res) => {
 	// exchange the authorization code we just received for an access token
-	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/userdata').then(result => {
-		console.log("result");
+	client.getAccessToken(req.query.code, 'https://immense  -shelf-22042.herokuapp.com/userdata').then(result => {
 		// use the access token to hfetch the user's profile information
-		client.get("/activities/distance/date/2018-02-03/7d.json", result.access_token).then(results => {
-		    person = "gotcha";
+		
+		url = resPath + date + "/" + timePeriod;
+		
+		client.get("/" + url + ".json", result.access_token).then(results => {
 			res.send(results[0]);
 		});
-	}).catch(result => {
-	    person = "caught";
-	    res.send(result[0]);
-	});
+	}).catch(res.send);
 });
 
 
