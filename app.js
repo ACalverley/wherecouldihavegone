@@ -14,7 +14,7 @@ app.use(express.static(__dirname + '/public'));
 
 var resPath = "activity/distance/date/";
 var timePeriod = "1m"; 
-var url;
+var url = "";
 
 const client = new FitbitApiClient({
 	clientId: "22CLZZ",
@@ -33,8 +33,8 @@ app.get("/userdata", (req, res) => {
 	// exchange the authorization code we just received for an access token
 	client.getAccessToken(req.query.code, 'https://immense  -shelf-22042.herokuapp.com/userdata').then(result => {
 		// use the access token to hfetch the user's profile information
-		
 		url = "/" + resPath + date + "/" + timePeriod + ".json";
+		console.log(url);
 		
 		client.get(url, result.access_token).then(results => {
 			res.send(results[0]);
