@@ -12,8 +12,8 @@ app.use(express.static(__dirname + '/public'));
 var person = "no name";
 
 const client = new FitbitApiClient({
-	clientId: "null",
-	clientSecret: "null",
+	clientId: "22CLZZ",
+	clientSecret: "d392657b7f9473d6a77da8f99dfcbf7d",
 	apiVersion: '1.2' // 1.2 is the default
 });
 
