@@ -13,8 +13,8 @@ app.use(express.static(__dirname + '/public'));
 
 
 const client = new FitbitApiClient({
-	clientId: "null",
-	clientSecret: "null",
+	clientId: "22CLZZ",
+	clientSecret: "d392657b7f9473d6a77da8f99dfcbf7d",
 	apiVersion: '1.2' // 1.2 is the default
 });
 
@@ -31,7 +31,7 @@ app.get("/callback", (req, res) => {
 		// use the access token to fetch the user's profile information
 		client.get("/profile.json", result.access_token).then(results => {
 		  //  console.log("success!");
-			res.send(result[0]);
+			res.render("home.ejs");
 		});
 	}).catch(res.send);
 });
@@ -40,7 +40,7 @@ app.get("/callback", (req, res) => {
 
 //function that runs when loading a page (get request)
 app.get("/", function(req,res){
-    res.render("home.ejs");
+    // res.render("home.ejs");
 });
 
 app.get("*", function(req, res){
