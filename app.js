@@ -47,11 +47,11 @@ app.get("/callback", (req, res) => {
 	}).catch(res.send);
 });
 
-app.get("/getTimePeriod", (res, req) => {
-   res.render("test"); 
+app.get("/getTimePeriod", (req, res) => {
+   res.render("test.ejs"); 
 });
 
-app.get("/getDistance", (res, req) => {
+app.get("/getDistance", (req, res) => {
     client.get(url, accessToken).then(result => {
         res.send(result[0]);
     });
@@ -59,7 +59,7 @@ app.get("/getDistance", (res, req) => {
 
 
 //function that runs when loading a page (get request)
-app.get("/", function(req,res){
+app.get("/", function(req, res){
     res.send("<h1>HI</h1>");
 });
 
