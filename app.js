@@ -9,7 +9,7 @@ app.set("view enginer", "ejs");
 
 app.use(express.static(__dirname + '/public'));
 
-// var person = "no name";
+var person = "no name";
 
 const client = new FitbitApiClient({
 	clientId: "null",
@@ -29,6 +29,7 @@ app.get("/callback", (req, res) => {
 	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/').then(result => {
 		// use the access token to fetch the user's profile information
 		client.get("/profile.json", result.access_token).then(results => {
+		    person = results;
 			res.send(results[0]);
 		});
 	}).catch(res.send);
@@ -41,9 +42,10 @@ app.get("/", function(req,res){
     res.send("<h1>HI</h1>");
 });
 
-// app.get("/testperson", function(req, res){
-//     console.log(person);
-// })
+app.get("/testperson", function(req, res){
+    console.log("test");
+    console.log(person);
+})
 
 app.get("*", function(req, res){
    res.send("Sorry, page not found...What are you doing with your life?"); 
