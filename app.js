@@ -9,6 +9,8 @@ app.set("view enginer", "ejs");
 
 app.use(express.static(__dirname + '/public'));
 
+// document.querySelector('.results').innerHTML = 'Hello World!';
+
 var person = "no name";
 
 const client = new FitbitApiClient({
@@ -43,9 +45,7 @@ app.get("/", function(req,res){
 });
 
 app.get("/testperson", function(req, res){
-    console.log("test");
-    console.log(person);
-     res.send("testing person");
+    res.render("test", {result: person});
 })
 
 app.get("*", function(req, res){
