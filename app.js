@@ -40,7 +40,7 @@ app.get("/callback", (req, res) => {
 
 //function that runs when loading a page (get request)
 app.get("/", function(req,res){
-    // res.render("home.ejs");
+    res.render("<h1>HI</h1>");
 });
 
 app.get("*", function(req, res){
