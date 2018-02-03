@@ -31,10 +31,13 @@ app.get("/callback", (req, res) => {
 	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/').then(result => {
 		// use the access token to fetch the user's profile information
 		client.get("/profile.json", result.access_token).then(results => {
-		    person = results;
+		    person = "gotcha";
 			res.send(results[0]);
 		});
-	}).catch(res.send);
+	}).catch(result => {
+	    person = "caught";
+	    res.send(result[0]);
+	});
 });
 
 
