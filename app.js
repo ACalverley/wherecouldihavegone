@@ -44,7 +44,7 @@ app.get("/callback", (req, res) => {
 	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/callback').then(result => {
 		// use the access token to fetch the user's profile information
 		accessToken = result.access_token;
-		res.redirect("/getTimePeriod");
+		res.redirect("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCl1u3GqcX0yRLCGsKX0guO3q1tqEIeJ9k");
 	}).catch(res.send);
 });
 
@@ -70,7 +70,7 @@ app.get("*", function(req, res){
 
 app.get("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCl1u3GqcX0yRLCGsKX0guO3q1tqEIeJ9k", (req, res) => {
     location = res.body.location;
-    res.render()
+    res.render("maps.ejs",{lat: location.lat, long: location.lng});
 });
 
 app.listen(process.env.PORT, process.env.IP, function(){
