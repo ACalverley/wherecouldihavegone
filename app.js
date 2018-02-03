@@ -5,10 +5,11 @@ var express = require("express"),
 //all files to be rendered are ejs (no longer need .ejs at the end)
 app.set("view enginer", "ejs");
 
+app.use(express.static(__dirname + '/public'));
 
 //function that runs when loading a page (get request)
 app.get("/", function(req,res){
-    res.render("./client/index.html");
+    res.render("home.ejs");
 });
 
 app.get("*", function(req, res){
