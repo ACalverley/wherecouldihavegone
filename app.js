@@ -40,10 +40,11 @@ app.get("/authorize", (req, res) => {
 // handle the callback from the Fitbit authorization flow
 app.get("/callback", (req, res) => {
 	// exchange the authorization code we just received for an access token
-	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/callback').then(result => {
+	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/getTimePeriod').then(result => {
 		// use the access token to hfetch the user's profile information
 		accessToken = result.access_token;
-		res.render("test");
+		res.send();
+// 		res.render("test");
 	}).catch(res.send);
 });
 
