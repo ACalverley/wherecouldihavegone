@@ -28,7 +28,7 @@ app.get("/authorize", (req, res) => {
 // handle the callback from the Fitbit authorization flow
 app.get("/userdata", (req, res) => {
 	// exchange the authorization code we just received for an access token
-	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/userdata').then(result => {
+	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/').then(result => {
 		console.log("result");
 		// use the access token to hfetch the user's profile information
 		client.get("/1/user/-/activities/distance/date/2018-02-03/7d", result.access_token).then(results => {
