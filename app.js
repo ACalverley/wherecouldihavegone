@@ -68,7 +68,7 @@ app.get("*", function(req, res){
    res.send("Sorry, page not found...What are you doing with your life?"); 
 });
 
-app.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCl1u3GqcX0yRLCGsKX0guO3q1tqEIeJ9k", (req, res) => {
+app.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCFQ2_a-TTydH19osWZHvCrukRGJQ3ft7I", (req, res) => {
     location = res.body.location;
     res.render("maps.ejs",{lat: location.lat, long: location.lng});
 });
