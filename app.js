@@ -18,6 +18,7 @@ var resPath = "activities/distance/date/";
 var timePeriod; 
 var url;
 var accessToken;
+var location;
 
 const client = new FitbitApiClient({
 	clientId: "22CLZZ",
@@ -60,11 +61,16 @@ app.get("/getDistance", (req, res) => {
 
 //function that runs when loading a page (get request)
 app.get("/", function(req, res){
-    res.send("index");
+    res.render("index.ejs");
 });
 
 app.get("*", function(req, res){
    res.send("Sorry, page not found...What are you doing with your life?"); 
+});
+
+app.get("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCl1u3GqcX0yRLCGsKX0guO3q1tqEIeJ9k", (req, res) => {
+    location = res.body.location;
+    res.render()
 });
 
 app.listen(process.env.PORT, process.env.IP, function(){
