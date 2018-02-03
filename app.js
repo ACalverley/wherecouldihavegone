@@ -9,7 +9,7 @@ app.set("view enginer", "ejs");
 
 app.use(express.static(__dirname + '/public'));
 
-var person;
+var person = "no name";
 
 const client = new FitbitApiClient({
 	clientId: "22CLZZ",
