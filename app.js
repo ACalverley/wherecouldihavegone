@@ -31,7 +31,7 @@ app.get("/userdata", (req, res) => {
 	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/userdata').then(result => {
 		console.log("result");
 		// use the access token to hfetch the user's profile information
-		client.get("/activities/distance/date/2018-02-03/7d", result.access_token).then(results => {
+		client.get("/1/user/-/activities/distance/date/2018-02-03/7d.json", result.access_token).then(results => {
 		    person = "gotcha";
 			res.send(results[0]);
 		});
