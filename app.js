@@ -43,6 +43,7 @@ app.get("/callback", (req, res) => {
 	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/callback').then(result => {
 		// use the access token to hfetch the user's profile information
 		accessToken = result.access_token;
+		res.redirect("test.ejs");
 	}).catch(res.send);
 });
 
