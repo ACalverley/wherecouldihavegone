@@ -40,11 +40,10 @@ app.get("/authorize", (req, res) => {
 // handle the callback from the Fitbit authorization flow
 app.get("/callback", (req, res) => {
 	// exchange the authorization code we just received for an access token
-	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/getTimePeriod').then(result => {
-		// use the access token to hfetch the user's profile information
+	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/callback').then(result => {
+		// use the access token to fetch the user's profile information
 		accessToken = result.access_token;
-		res.send();
-// 		res.render("test");
+		res.redirect("/getTimePeriod");
 	}).catch(res.send);
 });
 
@@ -53,7 +52,7 @@ app.get("/getTimePeriod", (res, req) => {
 });
 
 app.get("/getDistance", (res, req) => {
-    client.get(url, (result) => {
+    client.get(url, accessToken).then(result => {
         res.send(result[0]);
     });
 });

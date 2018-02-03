@@ -11,6 +11,7 @@
   "dependencies": {
     "async": "~0.2.8",
     "body-parser": "^1.18.2",
+    "city-reverse-geocoder": "0.0.1",
     "current-date": "^0.1.1",
     "ejs": "^2.5.7",
     "express": "^3.21.2",
