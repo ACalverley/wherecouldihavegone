@@ -5931,3 +5931,15 @@ textarea.form-control {
 .following img {
   max-width: 70px;
 }
+.btn-photo {
+    background-image: url(../img/Fitbit_logo_RGB.svg);
+    background-size: 81px 36px;
+    background-position-x: 50%;
+    background-position-y: 50%;
+    background-color: white;
+    border: white;
+    height: 41px;
+    width: 106px;
+    background-repeat: no-repeat;
+    
+}
