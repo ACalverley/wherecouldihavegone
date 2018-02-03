@@ -22,7 +22,7 @@ const client = new FitbitApiClient({
 // redirect the user to the Fitbit authorization page
 app.get("/authorize", (req, res) => {
 	// request access to the user's activity, heartrate, location, nutrion, profile, settings, sleep, social, and weight scopes
-	res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'https://immense-shelf-22042.herokuapp.com/', 'login'));
+	res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'https://immense-shelf-22042.herokuapp.com/callback', 'login'));
 });
 
 // handle the callback from the Fitbit authorization flow
@@ -30,7 +30,7 @@ app.get("/callback", (req, res) => {
 	// exchange the authorization code we just received for an access token
 	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/').then(result => {
 		console.log("result");
-		// use the access token to fetch the user's profile information
+		// use the access token to hfetch the user's profile information
 		client.get("/profile.json", result.access_token).then(results => {
 		    person = "gotcha";
 			res.send(results[0]);
