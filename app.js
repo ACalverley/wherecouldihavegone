@@ -44,7 +44,13 @@ app.get("/callback", (req, res) => {
 	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/callback').then(result => {
 		// use the access token to fetch the user's profile information
 		accessToken = result.access_token;
-		res.redirect("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCl1u3GqcX0yRLCGsKX0guO3q1tqEIeJ9k");
+		
+		app.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCFQ2_a-TTydH19osWZHvCrukRGJQ3ft7I", (req, res) => {
+            location = res.body.location;
+        });
+        
+        res.render("maps.ejs",{lat: location.lat, long: location.lng});
+        
 	}).catch(res.send);
 });
 
@@ -58,7 +64,6 @@ app.get("/getDistance", (req, res) => {
     });
 });
 
-
 //function that runs when loading a page (get request)
 app.get("/", function(req, res){
     res.render("index.ejs");
@@ -68,10 +73,6 @@ app.get("*", function(req, res){
    res.send("Sorry, page not found...What are you doing with your life?"); 
 });
 
-app.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCFQ2_a-TTydH19osWZHvCrukRGJQ3ft7I", (req, res) => {
-    location = res.body.location;
-    res.render("maps.ejs",{lat: location.lat, long: location.lng});
-});
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("Server has started!");
