@@ -61,7 +61,7 @@ app.get("/getDistance", (res, req) => {
 
 //function that runs when loading a page (get request)
 app.get("/", function(req,res){
-    res.send("<h1>HI</h1>");
+    res.send("index.html");
 });
 
 app.get("*", function(req, res){
