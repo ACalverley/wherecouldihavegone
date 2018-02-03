@@ -33,10 +33,10 @@ app.get("/userdata", (req, res) => {
 	// exchange the authorization code we just received for an access token
 	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/userdata').then(result => {
 		// use the access token to hfetch the user's profile information
-// 		url = "/" + resPath + date + "/" + timePeriod + ".json";
-// 		console.log(url);
+		url = "/" + resPath + date + "/" + timePeriod + ".json";
+		console.log(url);
 		
-		client.get("/activities/distance/date/2018-02-03/1m.json", result.access_token).then(results => {
+		client.get(url, result.access_token).then(results => {
 			res.send(results[0]);
 		});
 	}).catch(res.send);
@@ -48,10 +48,6 @@ app.get("/userdata", (req, res) => {
 app.get("/", function(req,res){
     res.send("<h1>HI</h1>");
 });
-
-app.get("/testperson", function(req, res){
-    res.render("test.ejs", {result: person});
-})
 
 app.get("*", function(req, res){
    res.send("Sorry, page not found...What are you doing with your life?"); 
