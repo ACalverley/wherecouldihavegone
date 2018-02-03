@@ -12,7 +12,7 @@ app.set("view enginer", "ejs");
 
 app.use(express.static(__dirname + '/public'));
 
-var resPath = "activity/distance/date/";
+var resPath = "activities/distance/date/";
 var timePeriod = "1m"; 
 var url = "";
 
