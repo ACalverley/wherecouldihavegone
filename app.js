@@ -25,7 +25,7 @@ const client = new FitbitApiClient({
 	apiVersion: '1.2' // 1.2 is the default
 });
 
-app.post("/getTimePeriod", function(req, res) {
+app.post("/storeTimePeriod", function(req, res) {
    timePeriod = req.body.timePeriod;
    url = "/" + resPath + date + "/" + timePeriod + ".json";
    res.redirect("/getDistance");
@@ -43,10 +43,13 @@ app.get("/callback", (req, res) => {
 	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/callback').then(result => {
 		// use the access token to hfetch the user's profile information
 		accessToken = result.access_token;
-		res.redirect("test.ejs");
+		res.redirect("/getTimePeriod");
 	}).catch(res.send);
 });
 
+app.get("/getTimePeriod", (res, req) => {
+   res.render("test"); 
+});
 
 app.get("/getDistance", (res, req) => {
     client.get(url, (result) => {
