@@ -8,8 +8,7 @@ app.set("view enginer", "ejs");
 
 //function that runs when loading a page (get request)
 app.get("/", function(req,res){
-    res.send("what's up from qhacks 2018!");
-    
+    res.render("./client/index.html");
 });
 
 app.get("*", function(req, res){
