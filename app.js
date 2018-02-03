@@ -4,6 +4,7 @@ var passport = require('passport');
 var bodyParser = require("body-parser");
 var current_date = require("current-date");
 var FitbitApiClient = require("fitbit-node");
+var request = require('request');
 var app = express();
 var date = current_date('date', '-');
 
@@ -45,8 +46,9 @@ app.get("/callback", (req, res) => {
 		// use the access token to fetch the user's profile information
 		accessToken = result.access_token;
 		
-		app.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCFQ2_a-TTydH19osWZHvCrukRGJQ3ft7I", (req, res) => {
-            location = res.body.location;
+		request.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCFQ2_a-TTydH19osWZHvCrukRGJQ3ft7I", (err, req, res) => {
+            if(err) console.log("error getting current location");
+            else location = req.body.location;
         });
         
         res.render("maps.ejs",{lat: location.lat, long: location.lng});
