@@ -1,13 +1,26 @@
 {
-  "name": "chat-example",
-  "version": "0.0.0",
+  "name": "qhacks_2018",
+  "version": "1.0.0",
   "description": "A chat example to showcase how to use `socket.io` with a static `express` server with `async` for control flow.",
   "main": "server.js",
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ACalverley/qhacks_2018.git"
+  },
   "author": "Mostafa Eweda <mo.eweda@gmail.com>",
   "dependencies": {
     "async": "~0.2.8",
-    "express": "~3.2.4",
+    "ejs": "^2.5.7",
+    "express": "^3.2.6",
     "socket.io": "~0.9.14"
-  }
+  },
+  "scripts": {
+    "start": "node app.js"
+  },
+  "devDependencies": {},
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ACalverley/qhacks_2018/issues"
+  },
+  "homepage": "https://github.com/ACalverley/qhacks_2018#readme"
 }
