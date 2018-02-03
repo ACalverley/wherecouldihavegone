@@ -19,7 +19,7 @@ var resPath = "activities/distance/date/";
 var timePeriod; 
 var url;
 var accessToken;
-var location;
+var userLat, userLong;
 
 const client = new FitbitApiClient({
 	clientId: "22CLZZ",
@@ -45,13 +45,22 @@ app.get("/callback", (req, res) => {
 	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/callback').then(result => {
 		// use the access token to fetch the user's profile information
 		accessToken = result.access_token;
-		
-		request.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCFQ2_a-TTydH19osWZHvCrukRGJQ3ft7I", (err, req, res) => {
-            if(err) console.log("error getting current location");
-            else location = req.body.location;
+
+        request.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCFQ2_a-TTydH19osWZHvCrukRGJQ3ft7I", (req, res) => {
+            let parsedBody;
+            try {
+                parsedBody = JSON.parse(res.body);
+            } catch(e) {
+                //Handle error
+                console.log(e);
+            }
+            userLat = parsedBody.location.lat;
+            userLong = parsedBody.location.lng;
+            // console.log("lat is:", userLat);
+            // res.render("maps.ejs",{lat: userLat, long: userLong});
         });
         
-        res.render("maps.ejs",{lat: location.lat, long: location.lng});
+        
         
 	}).catch(res.send);
 });
