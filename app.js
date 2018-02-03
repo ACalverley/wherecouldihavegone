@@ -45,6 +45,7 @@ app.get("/", function(req,res){
 app.get("/testperson", function(req, res){
     console.log("test");
     console.log(person);
+     res.send("testing person");
 })
 
 app.get("*", function(req, res){
