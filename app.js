@@ -45,7 +45,7 @@ app.get("/", function(req,res){
 });
 
 app.get("/testperson", function(req, res){
-    res.render("test", {result: person});
+    res.render("test.ejs", {result: person});
 })
 
 app.get("*", function(req, res){
