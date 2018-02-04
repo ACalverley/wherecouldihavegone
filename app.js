@@ -3,12 +3,10 @@ var express = require("express");
 var passport = require('passport');
 var current_date = require("current-date");
 var FitbitApiClient = require("fitbit-node");
+var bodyParsern = require('body-parser');
 var request = require('request');
 var app = express();
 var date = current_date('date', '-');
-    
-//all files to be rendered are ejs (no longer need .ejs at the end)
-app.set("view enginer", "ejs");
 
 app.use(express.static(__dirname + '/public'));
 
@@ -33,17 +31,17 @@ app.post("/storeTimePeriod", function(req, res) {
 // redirect the user to the Fitbit authorization page
 app.get("/authorize", (req, res) => {
 	// request access to the user's activity, heartrate, location, nutrion, profile, settings, sleep, social, and weight scopes
-	res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'https://immense-shelf-22042.herokuapp.com/callback', 'login'));
+	res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://wherecouldihavegone.com/callback', 'login'));
 });
 
 // handle the callback from the Fitbit authorization flow
 app.get("/callback", (req, res) => {
 	// exchange the authorization code we just received for an access token
-	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/callback').then(result => {
+	client.getAccessToken(req.query.code, 'http://wherecouldihavegone.com/callback').then(result => {
 		// use the access token to fetch the user's profile information
 		accessToken = result.access_token;
 
-        request.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCFQ2_a-TTydH19osWZHvCrukRGJQ3ft7I", (req, res) => {
+        request.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDU-JY9CP6t-A6tBjSsvamsBiRg0hgY2T4", (req, res) => {
             let parsedBody;
             try {
                 parsedBody = JSON.parse(res.body);
@@ -51,19 +49,19 @@ app.get("/callback", (req, res) => {
                 //Handle error
                 console.log(e);
             }
+            console.log(parsedBody);
             userLat = parsedBody.location.lat;
             userLong = parsedBody.location.lng;
-            // console.log("lat is:", userLat);
-            // res.render("maps.ejs",{lat: userLat, long: userLong});
+            console.log("lat is: ", userLat, " long is: ", userLong);
         });
-        
-        
-        
-	}).catch(res.send);
+	}).then((result) => {
+	    res.render("maps.ejs",{lat: userLat, long: userLong});
+	});
 });
 
+
 app.get("/getTimePeriod", (req, res) => {
-   res.render("test.ejs"); 
+   res.render("maps.ejs"); 
 });
 
 app.get("/getDistance", (req, res) => {
@@ -74,13 +72,12 @@ app.get("/getDistance", (req, res) => {
 
 //function that runs when loading a page (get request)
 app.get("/", function(req, res){
-    res.render("index.ejs");
+    res.render("index.html");
 });
 
 app.get("*", function(req, res){
    res.send("Sorry, page not found...What are you doing with your life?"); 
 });
-
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("Server has started!");

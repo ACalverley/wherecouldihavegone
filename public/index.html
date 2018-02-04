@@ -69,44 +69,27 @@
     <div class="wrapper">
         <div class="page-header section-dark" style="background-image: url('img/antoine-barres.jpg')">
             <div class="filter"></div>
-    		<div class="content-center">
-    			<div class="container">
-    				<div class="title-brand">
-    					<h1 class="presentation-title">Where could you have gone?</h1>
-    					<div class="fog-low">
-    						<img src="img/fog-low.png" alt="">
-    					</div>
-    					<div class="fog-low right">
-    						<img src="img/fog-low.png" alt="">
-    					</div>
-    				</div>
-
-    				<h2 class="presentation-subtitle text-center">Connect with: </h2>
-                    <div class="container text-center">
-				        <div class="row">
-                            <div class="col-md-5 ml-auto mr-auto download-area">
-                                <a href="/authorize" class="btn btn-success btn-round btn-photo"></a>
-				            </div>
-                        </div>
-                    </div>
-<!--            <div class="moving-clouds" style="background-image: url('img/clouds.png'); "></div>-->
-            
-                <div class="content-center">
-                    <center><h6  class="content-center"
-                        >
-                        Created by
+        		<div class="content-center">
+        			<div class="container">
+        				<div class="title-brand">
+        					<h1 class="presentation-title">Where could I have gone?</h1>
+        					<div class="fog-low">
+        						<img src="img/fog-low.png" alt="">
+        					</div>
+            					<div class="fog-low right">
+            						<img src="img/fog-low.png" alt="">
+            					</div>
+        				    </div>
+    
+        				<h2 class="presentation-subtitle text-center">Login Using FitBit credentials: </h2>
+        				<center><a href="/authorize" class="btn btn-success btn-round btn-photo"></a></center>
+        			</div>
+        		</div>
+    		<h6 class="category category-absolute">Designed and coded by
     			<a href="https://github.com/ACalverley/qhacks_2018" target="_blank">
-    				the Qhackers </a>
-                    
-                <a href="https://www.creative-tim.com" target="_blank"> & Creative Tim
-                 </a>
-                
-                        
-            </h6></center>
-           </div>    
-            
-    		
-         </div>
+    				the Qhackers
+    			</a>
+    		</h6>
     	</div>
 </body> 
 
@@ -115,16 +98,9 @@
 <script src="assets/js/jquery-ui-1.12.1.custom.min.js" type="text/javascript"></script>
 <script src="assets/js/popper.js" type="text/javascript"></script>
 <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
-
+    
 <!-- Fitbit API call-->
-<script>
-$(document).ready(function(){
-    $("#fitbitbutton").click(function(){
-        $.get("/authorize");
-    });
-});
-</script>
-        
+
 <!-- Switches -->
 <script src="assets/js/bootstrap-switch.min.js"></script>
 
@@ -139,4 +115,3 @@ $(document).ready(function(){
 <script src="assets/js/paper-kit.js?v=2.1.0"></script>
 
 </html>
-
