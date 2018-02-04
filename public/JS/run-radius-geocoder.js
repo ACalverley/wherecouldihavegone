@@ -1,13 +1,13 @@
 var crg = require('./radius-geocoder.js');
-var request = require('request');
+var request = require('request-promise-native');
+const api_key = "AIzaSyB9b1eU1IE9Tdh0Bo8y8GMabGhMiQ-XTps";
 
-module.exports = function(userLat, userLong) {
+module.exports = function(userLat, userLong, distanceTraveled) {
     var origin_address, destination_address;
-    var url = "https://www.googleapis.com/maps/api/geocode/json?latlng=" + userLat + "," + userLong + "&key=AIzaSyDU-JY9CP6t-A6tBjSsvamsBiRg0hgY2T4";
+    var url = `https://www.googleapis.com/maps/api/geocode/json?latlng=${userLat},${userLong}&key=${api_key}`;
     
-    getNearestCity(userLat, userLong);
-    
-    // getOriginAddress();
+   	return getNearestCity(userLat, userLong, distanceTraveled);
+
     
     function getAddress(){
         request.post(url, (req, res) => {
@@ -28,10 +28,30 @@ module.exports = function(userLat, userLong) {
 }
 
 
-function getNearestCity(userLat, userLong){
+function getNearestCity(userLat, userLong, distanceTraveled){
         // Return the nearest cities within a certain distance of the provided lat/lon
-        var res = crg(userLat, userLong, 200);
-        var destinationLat = res[0].latitude;
-        var destinationLong = res[0].longitude;
+        var results = crg(userLat, userLong, distanceTraveled);
+
+        const promises = results.slice(0, 50).map((city)=> request.get(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${userLat},${userLong}&destinations=${city.latitude},${city.longitude}&key=${api_key}&mode=walking&units=metric`));
+
+        var minHamming = 10000;
+        var nearCity;
+
+        return Promise.all(promises)
+        	.then((responses)=> responses.map(o=>JSON.parse(o)))
+        	.then((responses)=> responses.reduce((nearestCity, currentCity)=>{
+        		// console.log("city: ", currentCity);
+        		// console.log("rows:",currentCity.rows[0]);
+        		// console.log("current city info - ",currentCity.rows[0].elements[0]);
+        		// console.log("nearest city info - ",nearestCity.rows[0].elements[0]);
+        		console.log(currentCity);
+        		var hamming = Math.abs(currentCity.rows[0].elements[0].distance.value - distanceTraveled);
+        		if(hamming < minHamming) {
+        			return currentCity;
+        		}
+        		else return nearestCity;
+        	}), 0)
+        	// .then(console.log)
+        	.catch(console.error);
 }
 
