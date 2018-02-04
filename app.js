@@ -54,9 +54,10 @@ app.get("/callback", (req, res) => {
             userLat = parsedBody.location.lat;
             userLong = parsedBody.location.lng;
             console.log("lat is: ", userLat, " long is: ", userLat);
-            res.render("maps.ejs",{lat: userLat, long: userLong});
         });
 	}).catch(res.send);
+	
+	res.render("maps.ejs",{lat: userLat, long: userLong});
 });
 
 app.get("/getTimePeriod", (req, res) => {
