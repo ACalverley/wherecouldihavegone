@@ -72,11 +72,7 @@ app.get("/getDistance", (req, res) => {
 
 //function that runs when loading a page (get request)
 app.get("/", function(req, res){
-<<<<<<< HEAD
-    res.render("walkingDirections.ejs");
-=======
     res.render("index.html");
->>>>>>> b67c84ada9a43489a143eae41e247591437fbab6
 });
 
 app.get("*", function(req, res){
