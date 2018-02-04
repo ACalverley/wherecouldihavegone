@@ -1,7 +1,6 @@
 //use express
 var express = require("express");
 var passport = require('passport');
-var bodyParser = require("body-parser");
 var current_date = require("current-date");
 var FitbitApiClient = require("fitbit-node");
 var request = require('request');
