@@ -30,13 +30,13 @@ app.post("/storeTimePeriod", function(req, res) {
 // redirect the user to the Fitbit authorization page
 app.get("/authorize", (req, res) => {
 	// request access to the user's activity, heartrate, location, nutrion, profile, settings, sleep, social, and weight scopes
-	res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'https://immense-shelf-22042.herokuapp.com/callback', 'login'));
+	res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://wherecouldihavegone.com/callback', 'login'));
 });
 
 // handle the callback from the Fitbit authorization flow
 app.get("/callback", (req, res) => {
 	// exchange the authorization code we just received for an access token
-	client.getAccessToken(req.query.code, 'https://immense-shelf-22042.herokuapp.com/callback').then(result => {
+	client.getAccessToken(req.query.code, 'http://wherecouldihavegone.com/callback').then(result => {
 		// use the access token to fetch the user's profile information
 		accessToken = result.access_token;
 
