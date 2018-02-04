@@ -1,22 +1,18 @@
 
-     ,-----.,--.                  ,--. ,---.   ,--.,------.  ,------.
-    '  .--./|  | ,---. ,--.,--. ,-|  || o   \  |  ||  .-.  \ |  .---'
-    |  |    |  || .-. ||  ||  |' .-. |`..'  |  |  ||  |  \  :|  `--, 
-    '  '--'\|  |' '-' ''  ''  '\ `-' | .'  /   |  ||  '--'  /|  `---.
-     `-----'`--' `---'  `----'  `---'  `--'    `--'`-------' `------'
-    ----------------------------------------------------------------- 
+# wherecouldihavegone.com
+
+## Where would you end up if you packed your bags, hit the road and never looked back? We can show you.
+
+### Required: Fitbit Account
 
 
-Welcome to your Node.js project on Cloud9 IDE!
+Youre on your way home from work and your fitbit alert goes off: "Congratuatulations! you've hit your daily steps!" For a moment you marvel about how you managed to get to a number as high as 15 000, just by taking one step at a time. 
 
-This chat example showcases how to use `socket.io` with a static `express` server.
+But what if all that hard work had translated to a different goal - what if your fitbit hadn't reset to zero each night, after setting it up on day 01? 
 
-## Running the server
+And what if you had just started walking, without turning back... **_Where could you have made it to?_**
 
-1) Open `server.js` and start the app by clicking on the "Run" button in the top menu.
+According to the [Uganda Bureau of Statistics 2014 Census](http://www.ubos.org/2016/03/24/census-2014-final-results/), children have to walk an average 12km per day (6km to and from) for access to education.
 
-2) Alternatively you can launch the app from the Terminal:
+Data and technology can put a lot in perspective. We wanted to exploit the natural craving for personalized data visualization to better tell a story, through contrast, about the extent Ugandan children have to walk to get an education.
 
-    $ node server.js
-
-Once the server is running, open the project in the shape of 'https://projectname-username.c9users.io/'. As you enter your name, watch the Users list (on the left) update. Once you press Enter or Send, the message is shared with all connected clients.
