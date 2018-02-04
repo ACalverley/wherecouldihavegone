@@ -3,10 +3,9 @@ var express = require("express");
 var passport = require('passport');
 var current_date = require("current-date");
 var FitbitApiClient = require("fitbit-node");
-var bodyParsern = require('body-parser');
 var request = require('request');
+var logic = require('./run-radius-geocoder');
 var app = express();
-var date = current_date('date', '-');
 
 app.use(express.static(__dirname + '/public'));
 
@@ -22,11 +21,11 @@ const client = new FitbitApiClient({
 	apiVersion: '1.2' // 1.2 is the default
 });
 
-app.post("/storeTimePeriod", function(req, res) {
-   timePeriod = req.body.timePeriod;
-   url = "/" + resPath + date + "/" + timePeriod + ".json";
-   res.redirect("/getDistance");
-});
+// app.post("/storeTimePeriod", function(req, res) {
+//   timePeriod = req.body.timePeriod;
+//   url = "/" + resPath + date + "/" + timePeriod + ".json";
+//   res.redirect("/getDistance");
+// });
 
 // redirect the user to the Fitbit authorization page
 app.get("/authorize", (req, res) => {
@@ -35,30 +34,37 @@ app.get("/authorize", (req, res) => {
 });
 
 // handle the callback from the Fitbit authorization flow
-app.get("/callback", (req, res) => {
-	// exchange the authorization code we just received for an access token
-	client.getAccessToken(req.query.code, 'http://wherecouldihavegone.com/callback').then(result => {
-		// use the access token to fetch the user's profile information
-		accessToken = result.access_token;
+// app.get("/callback", (req, res) => {
+// 	// exchange the authorization code we just received for an access token
+// 	client.getAccessToken(req.query.code, 'http://wherecouldihavegone.com/callback').then(result => {
+// 		// use the access token to fetch the user's profile information
+// 		accessToken = result.access_token;
 
-        request.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDU-JY9CP6t-A6tBjSsvamsBiRg0hgY2T4", (req, res) => {
-            let parsedBody;
-            try {
-                parsedBody = JSON.parse(res.body);
-            } catch(e) {
-                //Handle error
-                console.log(e);
-            }
-            console.log(parsedBody);
-            userLat = parsedBody.location.lat;
-            userLong = parsedBody.location.lng;
-            console.log("lat is: ", userLat, " long is: ", userLong);
-        });
-	}).then((result) => {
-	    res.render("maps.ejs",{lat: userLat, long: userLong});
-	});
+//         request.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDU-JY9CP6t-A6tBjSsvamsBiRg0hgY2T4", (req, res) => {
+//             let parsedBody;
+//             try {
+//                 parsedBody = JSON.parse(res.body);
+//             } catch(e) {
+//                 //Handle error
+//                 console.log(e);
+//             }
+//             console.log(parsedBody);
+//             userLat = parsedBody.location.lat;
+//             userLong = parsedBody.location.lng;
+//             console.log("lat is: ", userLat, " long is: ", userLong);
+//         });
+// 	}).then((result) => {
+// 	    logic(userLat,userLong);
+// 	});
+// });
+
+app.get('/callback', async function(req, res) {
+    const {access_token} = await client.getAccessToken(req.query.code, 'http://wherecouldihavegone.com/callback');
+    const date = current_date('date', '-');
+    const url = `/activities/distance/date/${date}/7d.json`;
+    const distances = await client.get(url, accessToken);
+    console.log(distances);
 });
-
 
 app.get("/getTimePeriod", (req, res) => {
    res.render("maps.ejs"); 
@@ -72,7 +78,7 @@ app.get("/getDistance", (req, res) => {
 
 //function that runs when loading a page (get request)
 app.get("/", function(req, res){
-    res.render("index.html");
+    res.render("test_walking_map.html",{});
 });
 
 app.get("*", function(req, res){
