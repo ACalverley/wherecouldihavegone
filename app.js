@@ -4,7 +4,7 @@ var passport = require('passport');
 var current_date = require("current-date");
 var FitbitApiClient = require("fitbit-node");
 var request = require('request');
-var logic = require('./run-radius-geocoder');
+var logic = require('./public/JS/run-radius-geocoder.js');
 var app = express();
 
 app.use(express.static(__dirname + '/public'));
