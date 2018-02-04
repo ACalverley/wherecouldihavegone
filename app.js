@@ -65,12 +65,19 @@ app.get('/callback', async function(req, res) {
     const {access_token:accessToken} = await client.getAccessToken(req.query.code, 'http://localhost:3000/callback');
     // console.log(access_token);
     const date = current_date('date', '-');
-    const url = `/activities/distance/date/${date}/7d.json`;
+    const url_7d = `/activities/distance/date/${date}/7d.json`;
+    const url_1m = `/activities/distance/date/${date}/1m.json`;
   
-    const [body, response] = await client.get(url, accessToken); 
+    const [body1, response1] = await client.get(url_7d, accessToken); 
     // console.log(response.statusCode, body["activities-distance"]);
+    
+    const distanceSum_7d = body["activities-distance"].reduce((sum, {value})=>sum + Number(value), 0);
+    
+    const [body2, response2] = await client.get(url_1m, accessToken); 
 
-    const distanceSum = body["activities-distance"].reduce((sum, {value})=>sum + Number(value), 0);
+    const distanceSum_1m = body["activities-distance"].reduce((sum, {value})=>sum + Number(value), 0);
+    
+    const ugandaSum = 84000;
 
     // request.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDU-JY9CP6t-A6tBjSsvamsBiRg0hgY2T4").then((response) => {
             // let parsedBody;
@@ -93,17 +100,33 @@ app.get('/callback', async function(req, res) {
     userLong = geolocationResponse.location.lng;
     // res.send(`lat is: ${userLat}, long is: ${userLong}`);
     
-    var nearestCity = await logic(userLat, userLong, distanceSum);
+    var nearestCity_User_7d = await logic(userLat, userLong, distanceSum_7d);
+    
+    var nearestCity_User_1m = await logic(userLat, userLong, distanceSum_1m);
+    
+    var nearestCity_Uganda = await logic(userLat, userLong, ugandaSum);
 
     // console.log("nearest city----------: ", nearestCity);
 
-    var destination = nearestCity.destination_addresses[0];
-    var bad_char_1 = destination.indexOf("-");
-    if(bad_char_1) destination = destination.slice(bad_char_1 + 1, destination.length);
+    var destination_7d = nearestCity_User_7d.destination_addresses[0];
+    var bad_char_1 = destination_7d.indexOf("-");
+    if(bad_char_1) destination_7d = destination_7d.slice(bad_char_1 + 1, destination_7d.length);
 
-    console.log("destination:", destination);
+    console.log("destination 7d:", destination_7d);
+    
+    var destination_1m = nearestCity_User_1m.destination_addresses[0];
+    bad_char_1 = destination_1m.indexOf("-");
+    if(bad_char_1) destination_1m = destination_1m.slice(bad_char_1 + 1, destination_1m.length);
 
-    var origin = nearestCity.origin_addresses[0];
+    console.log("destination 1m:", destination_1m);
+    
+    var destination_Uganda = nearestCity_Uganda.destination_addresses[0];
+    bad_char_1 = destination_Uganda.indexOf("-");
+    if(bad_char_1) destination_Uganda = destination_Uganda.slice(bad_char_1 + 1, destination_Uganda.length);
+
+    console.log("destination uganda:", destination_Uganda);
+
+    var origin = nearestCity_User_7d.origin_addresses[0];
     var bad_char_2 = origin.indexOf("-");
     if(bad_char_2) origin = origin.slice(bad_char_2 + 1, origin.length);
 
@@ -114,7 +137,7 @@ app.get('/callback', async function(req, res) {
     // console.log("destination:", destination);
     // console.log("origin: ", origin);
     
-    res.render("map-test.ejs", {userLat: userLat, userLong: userLong, destination: destination, origin: origin});
+    res.render("map.ejs", {userLat: userLat, userLong: userLong, destination1: destination_1m, destination2: destination_Uganda, destination3: destination_7d, origin: origin});
     // res.render("map-test.ejs");
 });
 
