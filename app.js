@@ -71,9 +71,7 @@ app.get("/getTimePeriod", (req, res) => {
 });
 
 app.get("/getDistance", (req, res) => {
-    client.get(url, accessToken).then(result => {
-        res.send(result[0]);
-    });
+    res.render("map-test.ejs");
 });
 
 //function that runs when loading a page (get request)
