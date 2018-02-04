@@ -6,8 +6,6 @@ var FitbitApiClient = require("fitbit-node");
 var request = require('request');
 var app = express();
 var date = current_date('date', '-');
-
-app.use(bodyParser.urlencoded({extended: true}));
     
 //all files to be rendered are ejs (no longer need .ejs at the end)
 app.set("view enginer", "ejs");
