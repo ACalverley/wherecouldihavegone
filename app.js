@@ -3,6 +3,7 @@ var express = require("express");
 var passport = require('passport');
 var current_date = require("current-date");
 var FitbitApiClient = require("fitbit-node");
+var bodyParsern = require('body-parser');
 var request = require('request');
 var app = express();
 var date = current_date('date', '-');
@@ -51,10 +52,10 @@ app.get("/callback", (req, res) => {
             userLat = parsedBody.location.lat;
             userLong = parsedBody.location.lng;
             console.log("lat is: ", userLat, " long is: ", userLat);
+            
+            res.render("maps.ejs",{lat: userLat, long: userLong});
         });
 	}).catch(res.send);
-	
-	res.render("maps.ejs",{lat: userLat, long: userLong});
 });
 
 
