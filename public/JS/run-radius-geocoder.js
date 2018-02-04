@@ -7,9 +7,7 @@ module.exports = function(userLat, userLong) {
     
     getNearestCity(userLat, userLong);
     
-    
     // getOriginAddress();
-    
     
     function getAddress(){
         request.post(url, (req, res) => {

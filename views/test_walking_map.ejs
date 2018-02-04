@@ -81,8 +81,8 @@
         // Retrieve the start and end locations and create a DirectionsRequest using
         // WALKING directions.
         directionsService.route({
-          origin: <%= origin_address %>,
-          destination: document.getElementById('end').value,
+          origin: <%= origin %>,
+          destination: <%= destination %>,
           travelMode: 'WALKING'
         }, function(response, status) {
           // Route the directions and pass the response to a function to create
