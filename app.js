@@ -53,8 +53,8 @@ app.get("/callback", (req, res) => {
             }
             userLat = parsedBody.location.lat;
             userLong = parsedBody.location.lng;
-            // console.log("lat is:", userLat);
-            // res.render("maps.ejs",{lat: userLat, long: userLong});
+            console.log("lat is: ", userLat, " long is: ", userLat);
+            res.render("maps.ejs",{lat: userLat, long: userLong});
         });
 	}).catch(res.send);
 });
