@@ -6,9 +6,6 @@ var FitbitApiClient = require("fitbit-node");
 var request = require('request');
 var app = express();
 var date = current_date('date', '-');
-    
-//all files to be rendered are ejs (no longer need .ejs at the end)
-app.set("view enginer", "ejs");
 
 app.use(express.static(__dirname + '/public'));
 
@@ -72,7 +69,7 @@ app.get("/getDistance", (req, res) => {
 
 //function that runs when loading a page (get request)
 app.get("/", function(req, res){
-    res.render("index.ejs");
+    res.render("index.html");
 });
 
 app.get("*", function(req, res){
