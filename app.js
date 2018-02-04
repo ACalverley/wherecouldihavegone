@@ -52,7 +52,7 @@ app.get("/callback", (req, res) => {
             console.log(parsedBody);
             userLat = parsedBody.location.lat;
             userLong = parsedBody.location.lng;
-            console.log("lat is: ", userLat, " long is: ", userLat);
+            console.log("lat is: ", userLat, " long is: ", userLong);
         });
 	}).catch(res.send);
 	
