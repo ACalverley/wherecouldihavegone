@@ -44,7 +44,7 @@ app.get("/callback", (req, res) => {
         request.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCFQ2_a-TTydH19osWZHvCrukRGJQ3ft7I", (req, res) => {
             let parsedBody;
             try {
-                parsedBody = JSON.parse(res);
+                parsedBody = JSON.parse(res.body);
             } catch(e) {
                 //Handle error
                 console.log(e);
