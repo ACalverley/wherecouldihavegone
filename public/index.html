@@ -73,30 +73,41 @@
     			<div class="container">
     				<div class="title-brand">
     					<h1 class="presentation-title">Where could you have gone?</h1>
+    					<div class="fog-low">
+    						<img src="img/fog-low.png" alt="">
+    					</div>
+    					<div class="fog-low right">
+    						<img src="img/fog-low.png" alt="">
+    					</div>
     				</div>
 
     				<h2 class="presentation-subtitle text-center">Connect with: </h2>
-                        <div class="container text-center">
-    				        <div class="row">
-                                <div class="col-md-5 ml-auto mr-auto download-area">
-                                    <a href="/authorize" class="btn btn-success btn-round btn-photo"></a>
-                                        <div class="fog-low">
-                    						<img src="img/fog-low.png" alt="">
-                    					</div>
-                    					<div class="fog-low right">
-                    						<img src="img/fog-low.png" alt="">
-                    					</div>
-    				            </div>
-                            </div>
+                    <div class="container text-center">
+				        <div class="row">
+                            <div class="col-md-5 ml-auto mr-auto download-area">
+                                <button id="fitbitbutton" class="btn btn-success btn-round btn-photo"></button>
+				            </div>
                         </div>
-                    <div class="moving-clouds" style="background-image: url('img/clouds.png'); "></div>
+                    </div>
+            <div class="moving-clouds" style="background-image: url('img/clouds.png'); ">
+
+            </div>
+            
                 <div class="content-center">
-                    <center><h6 class="content-center">Created by
+                    <center><h6  class="content-center"
+                        >
+                        Created by
     			<a href="https://github.com/ACalverley/qhacks_2018" target="_blank">
     				the Qhackers </a>
-                <a href="https://www.creative-tim.com" target="_blank"> & Creative Tim </a>
+                    
+                <a href="https://www.creative-tim.com" target="_blank"> & Creative Tim
+                 </a>
+                
+                        
             </h6></center>
            </div>    
+            
+    		
          </div>
     	</div>
 </body> 
@@ -108,14 +119,6 @@
 <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
     
 <!-- Fitbit API call-->
-// <script>
-// $(document).ready(function(){
-//     $("#fitbitbutton").click(function(){
-//         print.console("hi");
-//         $.get("authorize");
-//     });
-// });
-// </script>
 
 <!-- Switches -->
 <script src="assets/js/bootstrap-switch.min.js"></script>
@@ -131,4 +134,3 @@
 <script src="assets/js/paper-kit.js?v=2.1.0"></script>
 
 </html>
-
