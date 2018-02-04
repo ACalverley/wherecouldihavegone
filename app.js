@@ -56,14 +56,11 @@ app.get("/callback", (req, res) => {
             // console.log("lat is:", userLat);
             // res.render("maps.ejs",{lat: userLat, long: userLong});
         });
-        
-        
-        
 	}).catch(res.send);
 });
 
 app.get("/getTimePeriod", (req, res) => {
-   res.render("test.ejs"); 
+   res.render("maps.ejs"); 
 });
 
 app.get("/getDistance", (req, res) => {
@@ -80,7 +77,6 @@ app.get("/", function(req, res){
 app.get("*", function(req, res){
    res.send("Sorry, page not found...What are you doing with your life?"); 
 });
-
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("Server has started!");
