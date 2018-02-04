@@ -57,6 +57,7 @@ app.get("/callback", (req, res) => {
 	res.render("maps.ejs",{lat: userLat, long: userLong});
 });
 
+
 app.get("/getTimePeriod", (req, res) => {
    res.render("maps.ejs"); 
 });
