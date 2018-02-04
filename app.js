@@ -41,7 +41,7 @@ app.get("/callback", (req, res) => {
 		// use the access token to fetch the user's profile information
 		accessToken = result.access_token;
 
-        request.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCFQ2_a-TTydH19osWZHvCrukRGJQ3ft7I", (req, res) => {
+        request.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDU-JY9CP6t-A6tBjSsvamsBiRg0hgY2T4", (req, res) => {
             let parsedBody;
             try {
                 parsedBody = JSON.parse(res.body);
