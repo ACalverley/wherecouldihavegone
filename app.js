@@ -44,18 +44,19 @@ app.get("/callback", (req, res) => {
         request.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCFQ2_a-TTydH19osWZHvCrukRGJQ3ft7I", (req, res) => {
             let parsedBody;
             try {
-                parsedBody = JSON.parse(res.body);
+                parsedBody = JSON.parse(res);
             } catch(e) {
                 //Handle error
                 console.log(e);
             }
+            console.log(parsedBody);
             userLat = parsedBody.location.lat;
             userLong = parsedBody.location.lng;
             console.log("lat is: ", userLat, " long is: ", userLat);
-            
-            res.render("maps.ejs",{lat: userLat, long: userLong});
         });
 	}).catch(res.send);
+	
+	res.render("maps.ejs",{lat: userLat, long: userLong});
 });
 
 
