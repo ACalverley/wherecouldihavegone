@@ -33,7 +33,7 @@ const client = new FitbitApiClient({
 app.get("/authorize", (req, res) => {
   console.log("we here");
     // request access to the user's activity, heartrate, location, nutrion, profile, settings, sleep, social, and weight scopes
-  res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:3000/callback', 'login'));
+  res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://wherecouldihavegone.com/callback', 'login'));
 });
 
 // handle the callback from the Fitbit authorization flow
