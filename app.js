@@ -62,7 +62,7 @@ app.get("/authorize", (req, res) => {
 // });
 
 app.get('/callback', async function(req, res) {
-    const {access_token:accessToken} = await client.getAccessToken(req.query.code, 'http://localhost:3000/callback');
+    const {access_token:accessToken} = await client.getAccessToken(req.query.code, 'http://wherecouldihavegone.com/callback');
     // console.log(access_token);
     const date = current_date('date', '-');
     const url = `/activities/distance/date/${date}/7d.json`;
