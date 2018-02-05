@@ -114,7 +114,7 @@ app.get('/callback', async function(req, res) {
     // console.log("destination:", destination);
     // console.log("origin: ", origin);
     
-    res.render("map-test.ejs", {userLat: userLat, userLong: userLong, destination: destination, origin: origin});
+    res.render("test_maps.ejs", {userLat: userLat, userLong: userLong, destination: destination, origin: origin});
     // res.render("map-test.ejs");
 });
 
