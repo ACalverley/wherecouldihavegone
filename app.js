@@ -8,6 +8,7 @@ var logic = require('./public/JS/run-radius-geocoder.js');
 var app = express();
 const port = process.env.PORT || 3000;
 const api_key = "AIzaSyB9b1eU1IE9Tdh0Bo8y8GMabGhMiQ-XTps";
+const callbackURL = "http://localhost:3000/callback"
 
 app.use(express.static(__dirname + '/public'));
 
@@ -33,7 +34,7 @@ const client = new FitbitApiClient({
 app.get("/authorize", (req, res) => {
   console.log("we here");
     // request access to the user's activity, heartrate, location, nutrion, profile, settings, sleep, social, and weight scopes
-  res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://wherecouldihavegone.com/callback', 'login'));
+  res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', callbackURL, 'login'));
 });
 
 // handle the callback from the Fitbit authorization flow
@@ -62,7 +63,7 @@ app.get("/authorize", (req, res) => {
 // });
 
 app.get('/callback', async function(req, res) {
-    const {access_token:accessToken} = await client.getAccessToken(req.query.code, 'http://wherecouldihavegone.com/callback');
+    const {access_token:accessToken} = await client.getAccessToken(req.query.code, callbackURL);
     // console.log(access_token);
     const date = current_date('date', '-');
     const url = `/activities/distance/date/${date}/7d.json`;
