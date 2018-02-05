@@ -50,7 +50,7 @@
         // Create a map and center it on Manhattan.
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 13,
-          center: {lat: userLat, lng: userLong}
+          center: {lat: <%=userLat%>, lng: <%=userLong%>}
         });
 
         // Create a renderer for directions and bind it to the map.
@@ -81,8 +81,8 @@
         // Retrieve the start and end locations and create a DirectionsRequest using
         // WALKING directions.
         directionsService.route({
-          origin: <%= origin %>,
-          destination: <%= destination %>,
+          origin: "<%= origin %>",
+          destination: "<%= destination %>",
           travelMode: 'WALKING'
         }, function(response, status) {
           // Route the directions and pass the response to a function to create
@@ -122,7 +122,7 @@
       }
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDU-JY9CP6t-A6tBjSsvamsBiRg0hgY2T4&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDU-JY9CP6t-A6tBjSsvamsBiRg0hgY2T4&libraries=drawing&callback=initMap">
     </script>
   </body>
 </html>
