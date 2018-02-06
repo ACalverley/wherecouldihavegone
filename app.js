@@ -32,7 +32,7 @@ const client = new FitbitApiClient({
 
 // redirect the user to the Fitbit authorization page
 app.get("/authorize", (req, res) => {
-  console.log("we here");
+  console.log("calling fitbit api");
     // request access to the user's activity, heartrate, location, nutrion, profile, settings, sleep, social, and weight scopes
   res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', callbackURL, 'login'));
 });
@@ -47,7 +47,7 @@ app.get("/authorize", (req, res) => {
 //         request.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDU-JY9CP6t-A6tBjSsvamsBiRg0hgY2T4", (req, res) => {
 //             let parsedBody;
 //             try {
-//                 parsedBody = JSON.parse(res.body);
+//                 parsedBody = JSON.parse(res.body
 //             } catch(e) {
 //                 //Handle error
 //                 console.log(e);
@@ -115,7 +115,7 @@ app.get('/callback', async function(req, res) {
     // console.log("destination:", destination);
     // console.log("origin: ", origin);
     
-    res.render("test_walking_map.ejs", {userLat: userLat, userLong: userLong, destination: destination, origin: origin});
+    res.render("maps_1path.ejs", {distanceTraveled: distanceSum, userLat: userLat, userLong: userLong, destination: destination, origin: origin});
     // res.render("map-test.ejs");
 });
 
