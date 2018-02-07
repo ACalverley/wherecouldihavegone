@@ -92,6 +92,20 @@
             }
     </script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(window).scroll(function() {    
+            var scroll = $(window).scrollTop();
+
+            if (scroll >= 10) {
+                $("#navbar").removeClass("navbar-transparent");
+            } else {
+                $("#navbar").addClass("navbar-transparent");
+            }
+        });
+    </script>
+
+
     <title>Where could I have gone?</title>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
@@ -112,6 +126,7 @@
     <!-- Google Maps Initialization -->
     <meta name="viewport" content="initial-scale=1.0">
 
+
     <title>WhereCouldIHaveGone</title>
     <style>
         /* Always set the map height explicitly to define the size of the div
@@ -131,9 +146,9 @@
     </style>
 </head>
 
-<body nload="initMap()">
+<body>
     <!-- Nav bar -->
-    <nav class="navbar navbar-expand-md navbar-transparent fixed-top" color-on-scroll="500">
+    <nav id="navbar" class="navbar navbar-expand-md navbar-transparent fixed-top" color-on-scroll="500">
         <div class="container">
             <div class="navbar-translate">
                 <button class="navbar-toggler navbar-toggler-right navbar-burger" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -172,7 +187,32 @@
             </div>
         </div>
     </nav>
-
+<!-- 
+<div class="navbar navbar-default navbar-fixed-top" data-spy="affix" data-offset-top="400">
+  <div class="container">
+    <div class="navbar-header">
+      <a href="#" class="navbar-brand">Brand</a>
+      <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="#">Link</a></li>
+        <li><a href="#">Link</a></li>
+      </ul>
+      <ul class="nav navbar-right navbar-nav">
+        <li>
+          <a href="#">Link</a>
+        </li>
+        <li>
+          <a href="#"><span class="badge">2</span></a>
+        </li>
+      </ul>
+    </div>      
+  </div>
+</div>
+-->
     <!-- Landing Page -->
     <div class="wrapper">
         <div class="page-header section-dark" style="background-image: url('img/antoine-barres.jpg')">
@@ -198,12 +238,12 @@
                 </div>
             </div>
             <h6 class="category category-absolute">Created by
-                <a href="https://github.com/ACalverley/qhacks_2018" target="_blank">
-                        the Qhackers <a href="https://www.creative-tim.com" target="_blank"> & Creative Tim
-                </a>
+                <a href="https://github.com/ACalverley/qhacks_2018" target="_blank"> the Qhackers </a>
+                &
+                <a href="https://www.creative-tim.com" target="_blank">Creative Tim </a>
             </h6>
 
-            <!-- <div id="background-img" class="moving-clouds" style="background-image: url('img/clouds.png'); "></div>   -->
+            <!-- <div id="background-img" class="moving-clouds" style="background-image: url('img/clouds.png'); "></div>  -->
         </div>
 
         <!-- Main Map section -->
@@ -237,13 +277,7 @@
             </div>
 
         </div>
-
-        <!-- HERE IS THE ISSUE, NOT ENOUGH DIVS -->
-        <!--            </div>-->
-
         <div class="container" style="padding-left: 80px;">
-            <!--            <div class="section section-buttons">-->
-
             <hr>
             <div class="row" style="margin: auto;">
 
