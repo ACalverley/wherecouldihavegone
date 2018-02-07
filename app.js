@@ -134,7 +134,7 @@ app.get("/getDistance", (req, res) => {
 
 //function that runs when loading a page (get request)
 app.get("/test", function(req, res){
-    res.render("maps_1path.ejs", {distanceTraveled: 100, userLat: 50, userLong: 50, destination: "372 Maple St, Deseronto, ON K0K 1X0, Canada", origin: "119 Collingwood St, Kingston, ON K7L 3X6, Canada"});
+    res.render("maps_2path.ejs", {distanceTraveled: 100, userLat: 50, userLong: -50, destination: "372 Maple St, Deseronto, ON K0K 1X0, Canada", origin: "119 Collingwood St, Kingston, ON K7L 3X6, Canada"});
 });
 
 app.get("*", function(req, res){
