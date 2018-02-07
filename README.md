@@ -15,7 +15,21 @@ But what if all that hard work had translated to a different goal - what if your
 
 And what if you had just started walking, without turning back... **_Where could you have made it to?_**
 
-According to the [Uganda Bureau of Statistics 2014 Census](http://www.ubos.org/2016/03/24/census-2014-final-results/), children have to walk an average 12km per day (6km to and from) for access to education.
+## The Goal
 
 Data and technology can put a lot in perspective. We wanted to exploit the natural craving for personalized data visualization to better tell a story, through contrast, about the extent Ugandan children have to walk to get an education.
+
+- [ ] Add screenshot of comparisons
+
+## Take a Moment to Think
+
+According to the [Bureau of Statistics 2014 Census](http://www.ubos.org/2016/03/24/census-2014-final-results/), Ugandan children have to walk an average 12km per day (6km to and from) for access to education. 
+
+- [ ] Complete this section
+
+# To do
+- [ ] Get domain working completely (Callbacks from Fitbit API can be finnicky)
+- [ ] Display path of comparision map to front-end (Data is already present in backend)
+- [ ] Subscription service for donations: Tracks if the user walked 12km that day, charges $X per Ykm missed from goal and donates to charity selected 
+
 
