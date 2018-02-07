@@ -30,6 +30,8 @@ According to the [Bureau of Statistics 2014 Census](http://www.ubos.org/2016/03/
 # To do
 - [ ] Get domain working completely (Callbacks from Fitbit API can be finnicky)
 - [ ] Display path of comparision map to front-end (Data is already present in backend)
+- [ ] Quantify time to find longest city (Out of X cities, takes Y seconds to find farthest city using our algorithm)
 - [ ] Subscription service for donations: Tracks if the user walked 12km that day, charges $X per Ykm missed from goal and donates to charity selected 
+
 
 
