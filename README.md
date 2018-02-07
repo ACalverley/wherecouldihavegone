@@ -1,10 +1,13 @@
 
 # wherecouldihavegone.com
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 ## Where would you end up if you packed your bags, hit the road and never looked back? We can show you.
 
-### Required: Fitbit Account
+### Required: ![Screenshot](https://github.com/ACalverley/wherecouldihavegone/blob/master/public/img/Fitbit_logo_RGBSmaller.png) Account 
 
+![Landing Page](https://github.com/ACalverley/wherecouldihavegone/blob/master/public/img/LandingPage.png)
 
 Youre on your way home from work and your fitbit alert goes off: "Congratuatulations! you've hit your daily steps!" For a moment you marvel about how you managed to get to a number as high as 15 000, just by taking one step at a time. 
 
