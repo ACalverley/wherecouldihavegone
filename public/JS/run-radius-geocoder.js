@@ -44,7 +44,7 @@ function getNearestCity(userLat, userLong, distanceTraveled){
         		// console.log("rows:",currentCity.rows[0]);
         		// console.log("current city info - ",currentCity.rows[0].elements[0]);
         		// console.log("nearest city info - ",nearestCity.rows[0].elements[0]);
-        		console.log(currentCity);
+        		// console.log(currentCity);
         		var hamming = Math.abs(currentCity.rows[0].elements[0].distance.value - distanceTraveled);
         		if(hamming < minHamming) {
         			return currentCity;

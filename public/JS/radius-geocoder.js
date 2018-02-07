@@ -86,9 +86,9 @@ var findCities = function(lat, lon, dist){
 
     var uniqueCities = removeDuplicates(cities, 'city');
 
-    console.log(uniqueCities);
+    // console.log(uniqueCities);
 
-    console.log(uniqueCities.length);
+    // console.log(uniqueCities.length);
 
     var obj = {};
 
