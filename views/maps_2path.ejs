@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="img/favicon.ico">
+    <link rel="apple-touch-icon" sizes="76x76" href="img/apple-icon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Where could I have gone?</title>
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- Bootstrap core CSS     -->
+    <link href="CSS/bootstrap.min.css" rel="stylesheet" />
+    <link href="CSS/paper-kit.css?v=2.1.0" rel="stylesheet"/>
+
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="CSS/demo.css" rel="stylesheet" />
+
+    <!--     Fonts and icons     -->
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,300,700' rel='stylesheet' type='text/css'>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="CSS/nucleo-icons.css" rel="stylesheet" />
+    
+    <!-- Google Maps Initialization --> 
+    <meta name="viewport" content="initial-scale=1.0">
+
+    <title>WhereCouldIHaveGone</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      .mapClass {
+        height: 300px;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      /*html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }*/
+      /*#floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+      #warnings-panel {
+        width: 100%;
+        height:10%;
+        text-align: center;
+      }*/
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md fixed-top navbar-transparent" color-on-scroll="500">
+        <div class="container">
+            <div class="navbar-translate">
+                <button class="navbar-toggler navbar-toggler-right navbar-burger" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar"></span>
+                    <span class="navbar-toggler-bar"></span>
+                    <span class="navbar-toggler-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://qhacks.io/">QHacks 2<i class="fa fa-heart heart"></i>18 </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarToggler">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" rel="tooltip" title="Star on GitHub" data-placement="bottom" href="https://github.com/ACalverley/qhacks_2018" target="_blank">
+                            <i class="fa fa-github"></i>
+                            <p class="d-lg-none">GitHub</p>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+            <a href="https://chimp.net/groups/the-walking-school-bus-presents-access-in-motion-5km" target="_blank" class="btn btn-success btn-round">Donate</a>
+          </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="wrapper">
+        <div class="page-header section-dark" style="background-image: url('img/antoine-barres.jpg')">
+            <div class="filter"></div>
+        <div class="content-center">
+          <div class="container">
+            <div class="title-brand">
+              <h1 class="presentation-title">Where could I have gone?</h1>
+              <div class="fog-low">
+                <img src="img/fog-low.png" alt="">
+              </div>
+              <div class="fog-low right">
+                <img src="img/fog-low.png" alt="">
+              </div>
+            </div>
+
+          </div>
+        </div>
+            <div class="moving-clouds" style="background-image: url('img/clouds.png'); "></div>
+            
+        <h6 class="category category-absolute">Created by
+          <a href="https://github.com/ACalverley/qhacks_2018" target="_blank">
+            the QHackers </a><br>Design by <a href="https://www.creative-tim.com" target="_blank">Creative Tim
+                 </a>
+        </h6>
+            
+      </div>
+        
+        <!-- Main Map section --> 
+        <div class="container" style="padding-left: 80px;">
+<!--            <div class="section section-buttons">-->
+            
+            <div class="tim-title">
+                <h2>Over the past 30 days, you have travelled <%= distanceTraveled %> km</h2>
+            </div>
+            
+            <div class="row">
+                
+                <div class="col-md-8">
+                    <div class="col-spaced">
+                        <div class="mapClass" id="map_canvas1"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="col-spaced">
+                        <div class="card">
+                            <div class="card-header">Distance History</div> 
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">1 day</li>
+                                <li class="list-group-item">1 week</li>
+                                <li class="list-group-item" style="background: #51bcda;">1 month</li>
+                                <li class="list-group-item">All time</li>
+                            </ul>                        
+                        </div>
+                    </div>
+                </div> 
+                
+            </div> 
+            
+        </div>
+<!--            </div>-->
+        
+        <div class="container" style="padding-left: 80px;">
+<!--            <div class="section section-buttons">-->
+            
+            <hr>
+            <div class="row" style="margin: auto;">
+            
+            <div class="col-md-4" >
+                <div class="col-spaced">
+                    <div class="card">
+                        <div class="card-header"><b>Perspective</b></div>
+                        <div class="card-body">
+                            
+                            <p class="card-text">According to the Uganda Bureau of Statistics, Ugandan children have to walk an average of 12km a day for the opportunity to get an education. This would have been their trek over ### days. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="col-spaced">
+                    <div class="mapClass" id="map_canvas2"></div>
+                </div>    
+            </div>
+
+            </div>        
+        </div> 
+            <br/>
+  </div>
+        
+    <footer class="footer">
+        <div class="container">
+            <hr>
+                <div class="credits ml-auto">
+                    <span class="copyright">
+                        © <script>document.write(new Date().getFullYear())</script>, The QHackers and Creative Tim
+                    </span>
+                </div>
+            </div>
+    </footer>
+
+<script>
+        // var  map1, map2;
+        function initMap() {
+          var markerArray1 = [];
+          // var markerArray2 = [];
+
+          // Instantiate a directions service.
+          var directionsService1 = new google.maps.DirectionsService;
+
+          // var directionsService2 = new google.maps.DirectionsService;
+
+          // var myOptions = {
+          //     zoom: 14,
+          //     center: {lat: <%=userLat%>, lng: <%=userLong%>}
+          // }
+
+          // Create a map and center it on Manhattan.
+          var map1 = new google.maps.Map(document.getElementById('map_canvas1'), {
+              zoom: 14,
+              center: {lat: <%=userLat%>, lng: <%=userLong%>}
+          });
+
+          // map2 = new google.maps.Map(document.getElementById('map_canvas2'), myOptions);
+
+          // Create a renderer for directions and bind it to the map.
+          var directionsDisplay1 = new google.maps.DirectionsRenderer({map1: map1});
+
+          // var directionsDisplay2 = new google.maps.DirectionsRenderer({map2: map2});
+
+          // Instantiate an info window to hold step text.
+          var stepDisplay = new google.maps.InfoWindow;
+
+          // Display the route between the initial start and end selections.
+          calculateAndDisplayRoute(directionsDisplay1, directionsService1, markerArray1, stepDisplay, map1);
+
+          // calculateAndDisplayRoute(directionsDisplay2, directionsService2, markerArray2, stepDisplay, map2);          
+          // Listen to change events from the start and end lists.
+          // var onChangeHandler = function() {
+          //   calculateAndDisplayRoute(
+          //       directionsDisplay, directionsService, markerArray, stepDisplay, map);
+          // };
+          // document.getElementById('start').addEventListener('change', onChangeHandler);
+          // document.getElementById('end').addEventListener('change', onChangeHandler);
+        }
+
+        function calculateAndDisplayRoute(directionsDisplay, directionsService,
+            markerArray, stepDisplay, map) {
+          // First, remove any existing markers from the map.
+          for (var i = 0; i < markerArray.length; i++) {
+            markerArray[i].setMap(null);
+          }
+
+          // Retrieve the start and end locations and create a DirectionsRequest using
+          // WALKING directions.
+          directionsService.route({
+            origin: "<%= origin %>",
+            destination: "<%= destination %>",
+            travelMode: 'WALKING'
+          }, function(response, status) {
+            // Route the directions and pass the response to a function to create
+            // markers for each step.
+            if (status === 'OK') {
+              // document.getElementById('warnings-panel').innerHTML =
+              //     '<b>' + response.routes[0].warnings + '</b>';
+              directionsDisplay.setDirections(response);
+              // showSteps(response, markerArray, stepDisplay, map);
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
+          });
+        }
+
+        function showSteps(directionResult, markerArray, stepDisplay, map) {
+          // For each step, place a marker, and add the text to the marker's infowindow.
+          // Also attach the marker to an array so we can keep track of it and remove it
+          // when calculating new routes.
+          var myRoute = directionResult.routes[0].legs[0];
+          for (var i = 0; i < myRoute.steps.length; i++) {
+            var marker = markerArray[i] = markerArray[i] || new google.maps.Marker;
+            marker.setMap(map);
+            marker.setPosition(myRoute.steps[i].start_location);
+            attachInstructionText(
+                stepDisplay, marker, myRoute.steps[i].instructions, map);
+          }
+        }
+
+        function attachInstructionText(stepDisplay, marker, text, map) {
+          google.maps.event.addListener(marker, 'click', function() {
+            // Open an info window when the marker is clicked on, containing the text
+            // of the step.
+            stepDisplay.setContent(text);
+            stepDisplay.open(map, marker);
+          });
+        }
+      </script>
+      <script async defer
+      src=`https://maps.googleapis.com/maps/api/js?key=AIzaSyB9b1eU1IE9Tdh0Bo8y8GMabGhMiQ-XTps&libraries=drawing&callback=initMap`
+      </script>
+
+</body>
+</html>

@@ -10,6 +10,7 @@ const port = process.env.PORT || 3000;
 const api_key = "AIzaSyB9b1eU1IE9Tdh0Bo8y8GMabGhMiQ-XTps";
 const callbackURL = "http://localhost:3000/callback"
 
+
 app.use(express.static(__dirname + '/public'));
 
 var resPath = "activities/distance/date/";
@@ -118,6 +119,8 @@ app.get('/callback', async function(req, res) {
     res.render("maps_1path.ejs", {distanceTraveled: distanceSum, userLat: userLat, userLong: userLong, destination: destination, origin: origin});
     // res.render("map-test.ejs");
 });
+    
+
 
 // app.get("/getTimePeriod", (req, res) => {
 //   res.render("maps.ejs"); 
@@ -130,8 +133,8 @@ app.get("/getDistance", (req, res) => {
 });
 
 //function that runs when loading a page (get request)
-app.get("/", function(req, res){
-    res.render("index.html");
+app.get("/test", function(req, res){
+    res.render("maps_1path.ejs", {distanceTraveled: 100, userLat: 50, userLong: 50, destination: "372 Maple St, Deseronto, ON K0K 1X0, Canada", origin: "119 Collingwood St, Kingston, ON K7L 3X6, Canada"});
 });
 
 app.get("*", function(req, res){
@@ -141,3 +144,4 @@ app.get("*", function(req, res){
 app.listen(port, process.env.IP, function(){
     console.log("Server has started!");
 });
+
