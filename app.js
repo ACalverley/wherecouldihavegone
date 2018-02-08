@@ -68,8 +68,8 @@ app.get('/callback', async function(req, res) {
     const {access_token:accessToken} = await client.getAccessToken(req.query.code, callbackURL);
     // console.log(access_token);
     const date = current_date('date', '-');
-    const ugandaChildDistance = 30 * 12;
-    const url = `/activities/distance/date/${date}/1m.json`;
+    const ugandaChildDistance = 7 * 12;
+    const url = `/activities/distance/date/${date}/7d.json`;
   
     const [body, response] = await client.get(url, accessToken); 
     // console.log(response.statusCode, body["activities-distance"]);
