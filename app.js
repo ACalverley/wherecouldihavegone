@@ -4,7 +4,7 @@ var passport = require('passport');
 var current_date = require("current-date");
 var FitbitApiClient = require("fitbit-node");
 var request = require('request-promise-native');
-var logic = require('./public/JS/run-radius-geocoder.js');
+var getNearestCity = require('./public/JS/run-radius-geocoder.js');
 var app = express();
 const port = process.env.PORT || 3000;
 const api_key = "AIzaSyB9b1eU1IE9Tdh0Bo8y8GMabGhMiQ-XTps";
@@ -67,6 +67,7 @@ app.get('/callback', async function(req, res) {
     const {access_token:accessToken} = await client.getAccessToken(req.query.code, callbackURL);
     // console.log(access_token);
     const date = current_date('date', '-');
+    const ugandaChildDistance = 7 * 12;
     const url = `/activities/distance/date/${date}/7d.json`;
   
     const [body, response] = await client.get(url, accessToken); 
@@ -74,38 +75,29 @@ app.get('/callback', async function(req, res) {
 
     const distanceSum = body["activities-distance"].reduce((sum, {value})=>sum + Number(value), 0);
 
-    // request.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDU-JY9CP6t-A6tBjSsvamsBiRg0hgY2T4").then((response) => {
-            // let parsedBody;
-            // console.log(response);
-            // try {
-            //     parsedBody = JSON.parse(response);
-            // } catch(e) {
-            //     //Handle error
-            //     console.log(e);
-            // }
-            // console.log(parsedBody);
-            // userLat = parsedBody.location.lat;
-            // userLong = parsedBody.location.lng;
-              // console.log("lat is: ", userLat, " long is: ", userLong);
-      // });
+    console.log("distance sum: ",distanceSum);
 
     const geolocationResponse = JSON.parse(await request.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${api_key}`));
-    console.log(geolocationResponse);
+
+    console.log("geolocation response:", geolocationResponse);
+
     userLat = geolocationResponse.location.lat;
     userLong = geolocationResponse.location.lng;
     // res.send(`lat is: ${userLat}, long is: ${userLong}`);
     
-    var nearestCity = await logic(userLat, userLong, distanceSum);
+    var user_nearestCity = await getNearestCity(userLat, userLong, distanceSum);
 
-    // console.log("nearest city----------: ", nearestCity);
+    // var uganda_nearestCity = await getNearestCity(userLat, userLong, )
 
-    var destination = nearestCity.destination_addresses[0];
+    console.log("nearest city----------: ", user_nearestCity);
+
+    var destination = user_nearestCity.destination_addresses[0];
     var bad_char_1 = destination.indexOf("-");
     if(bad_char_1) destination = destination.slice(bad_char_1 + 1, destination.length);
 
     console.log("destination:", destination);
 
-    var origin = nearestCity.origin_addresses[0];
+    var origin = user_nearestCity.origin_addresses[0];
     var bad_char_2 = origin.indexOf("-");
     if(bad_char_2) origin = origin.slice(bad_char_2 + 1, origin.length);
 
@@ -134,7 +126,7 @@ app.get("/getDistance", (req, res) => {
 
 //function that runs when loading a page (get request)
 app.get("/test", function(req, res){
-    res.render("maps_2path.ejs", {distanceTraveled: 100, userLat: 50, userLong: -50, destination: "372 Maple St, Deseronto, ON K0K 1X0, Canada", origin: "119 Collingwood St, Kingston, ON K7L 3X6, Canada"});
+    res.render("maps_1path.ejs", {distanceTraveled: 100, userLat: 50, userLong: -50, destination: "372 Maple St, Deseronto, ON K0K 1X0, Canada", origin: "119 Collingwood St, Kingston, ON K7L 3X6, Canada"});
 });
 
 app.get("*", function(req, res){

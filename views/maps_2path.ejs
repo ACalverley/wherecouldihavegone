@@ -11,6 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
     <script>
+    var map;
             function initMap1(){
               var markerArray1 = [];
 
@@ -18,7 +19,7 @@
               var directionsService1 = new google.maps.DirectionsService;
     
               // Create a map and center it on Manhattan.
-              var map = new google.maps.Map(document.getElementById('map1'), {
+              map = new google.maps.Map(document.getElementById('map1'), {
                 zoom: 13,
                 center: {lat: <%=userLat%>, lng: <%=userLong%>}
               });
@@ -33,7 +34,7 @@
               calculateAndDisplayRoute(
                   directionsDisplay1, directionsService1, markerArray1, stepDisplay1, map);
 
-              initMap2();
+              // initMap2();
             }
 
             function initMap2(){
@@ -43,10 +44,10 @@
               var directionsService2 = new google.maps.DirectionsService;
     
               // Create a map and center it on Manhattan.
-              var map = new google.maps.Map(document.getElementById('map2'), {
-                zoom: 13,
-                center: {lat: <%=userLat%>, lng: <%=userLong%>}
-              });
+              // map = new google.maps.Map(document.getElementById('map2'), {
+              //   zoom: 13,
+              //   center: {lat: <%=userLat%>, lng: <%=userLong%>}
+              // });
     
               // Create a renderer for directions and bind it to the map.
               var directionsDisplay2 = new google.maps.DirectionsRenderer({map: map});
