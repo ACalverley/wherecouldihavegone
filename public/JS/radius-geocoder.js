@@ -106,9 +106,4 @@ var findCities = function(lat, lon, dist){
 
 }
 
-// console.log(cities);
-// console.log(cities.length);
-
-// console.timeEnd('time-citylist');
-
 module.exports = findCities;
