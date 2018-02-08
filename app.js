@@ -5,6 +5,7 @@ var current_date = require("current-date");
 var FitbitApiClient = require("fitbit-node");
 var request = require('request-promise-native');
 var getNearestCity = require('./public/JS/run-radius-geocoder.js');
+var formatQuery = require('./public/JS/formatQuery.js');
 var app = express();
 const port = process.env.PORT || 3000;
 const api_key = "AIzaSyB9b1eU1IE9Tdh0Bo8y8GMabGhMiQ-XTps";
@@ -73,9 +74,9 @@ app.get('/callback', async function(req, res) {
     const [body, response] = await client.get(url, accessToken); 
     // console.log(response.statusCode, body["activities-distance"]);
 
-    const distanceSum = body["activities-distance"].reduce((sum, {value})=>sum + Number(value), 0);
+    const distanceSum = body["activities-distance"].reduce((sum, {value})=>sum + Number(value), 0).toFixed(2);
 
-    console.log("distance sum: ",distanceSum);
+    console.log("distance sum: ", distanceSum);
 
     const geolocationResponse = JSON.parse(await request.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${api_key}`));
 
@@ -87,20 +88,16 @@ app.get('/callback', async function(req, res) {
     
     var user_nearestCity = await getNearestCity(userLat, userLong, distanceSum);
 
-    // var uganda_nearestCity = await getNearestCity(userLat, userLong, )
+    var ugandaChild_nearestCity = await getNearestCity(userLat, userLong, ugandaChildDistance);
 
     console.log("nearest city----------: ", user_nearestCity);
 
-    var destination = user_nearestCity.destination_addresses[0];
-    var bad_char_1 = destination.indexOf("-");
-    if(bad_char_1) destination = destination.slice(bad_char_1 + 1, destination.length);
+    var user_destination = formatQuery(user_nearestCity.destination_addresses[0]);
+    var ugandaChild_destination = formatQuery(ugandaChild_nearestCity.destination_addresses[0]);
+    var origin = formatQuery(user_nearestCity.origin_addresses[0]);
 
-    console.log("destination:", destination);
-
-    var origin = user_nearestCity.origin_addresses[0];
-    var bad_char_2 = origin.indexOf("-");
-    if(bad_char_2) origin = origin.slice(bad_char_2 + 1, origin.length);
-
+    console.log("user destination:", user_destination);
+    console.log("uganda child destination:", ugandaChild_destination);
     console.log("origin: ", origin);
 
     // var neat_origin = origin.replace(/)
@@ -108,7 +105,7 @@ app.get('/callback', async function(req, res) {
     // console.log("destination:", destination);
     // console.log("origin: ", origin);
     
-    res.render("maps_1path.ejs", {distanceTraveled: distanceSum, userLat: userLat, userLong: userLong, destination: destination, origin: origin});
+    res.render("maps_2path.ejs", {distanceTraveled: distanceSum, userLat: userLat, userLong: userLong, user_destination: user_destination, ugandaChild_destination: ugandaChild_destination, origin: origin});
     // res.render("map-test.ejs");
 });
     
@@ -136,4 +133,3 @@ app.get("*", function(req, res){
 app.listen(port, process.env.IP, function(){
     console.log("Server has started!");
 });
-

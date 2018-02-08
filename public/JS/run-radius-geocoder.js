@@ -50,7 +50,7 @@ function getNearestCity(userLat, userLong, distanceTraveled){
         		// console.log("rows:",currentCity.rows[0]);
         		// console.log("current city info - ",currentCity.rows[0].elements[0]);
         		// console.log("nearest city info - ",nearestCity.rows[0].elements[0]);
-        		console.log("current city: ",currentCity);
+        		// console.log("current city: ",currentCity);
                 // console.log("current city destination address: ",currentCity.destination_addresses[0]);
                 // console.log("nearestCity status: ", currentCity.rows[0].elements[0].status);
 
