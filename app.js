@@ -9,7 +9,7 @@ var formatQuery = require('./public/JS/formatQuery.js');
 var app = express();
 const port = process.env.PORT || 3000;
 const api_key = "AIzaSyB9b1eU1IE9Tdh0Bo8y8GMabGhMiQ-XTps";
-const callbackURL = "http://www.wherecouldihavegone.com/callback"
+const callbackURL = "http://localhost:3000/callback"
 
 
 app.use(express.static(__dirname + '/public'));
@@ -26,12 +26,6 @@ const client = new FitbitApiClient({
   apiVersion: '1.2' // 1.2 is the default
 });
 
-// app.post("/storeTimePeriod", function(req, res) {
-//   timePeriod = req.body.timePeriod;
-//   url = "/" + resPath + date + "/" + timePeriod + ".json";
-//   res.redirect("/getDistance");
-// });
-
 // redirect the user to the Fitbit authorization page
 app.get("/authorize", (req, res) => {
   console.log("calling fitbit api");
@@ -39,30 +33,6 @@ app.get("/authorize", (req, res) => {
   res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', callbackURL, 'login'));
 });
 
-// handle the callback from the Fitbit authorization flow
-// app.get("/callback", (req, res) => {
-//  // exchange the authorization code we just received for an access token
-//  client.getAccessToken(req.query.code, 'http://wherecouldihavegone.com/callback').then(result => {
-//    // use the access token to fetch the user's profile information
-//    accessToken = result.access_token;
-
-//         request.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDU-JY9CP6t-A6tBjSsvamsBiRg0hgY2T4", (req, res) => {
-//             let parsedBody;
-//             try {
-//                 parsedBody = JSON.parse(res.body
-//             } catch(e) {
-//                 //Handle error
-//                 console.log(e);
-//             }
-//             console.log(parsedBody);
-//             userLat = parsedBody.location.lat;
-//             userLong = parsedBody.location.lng;
-//             console.log("lat is: ", userLat, " long is: ", userLong);
-//         });
-//  }).then((result) => {
-//      logic(userLat,userLong);
-//  });
-// });
 
 app.get('/callback', async function(req, res) {
     const {access_token:accessToken} = await client.getAccessToken(req.query.code, callbackURL);
@@ -109,11 +79,6 @@ app.get('/callback', async function(req, res) {
     // res.render("map-test.ejs");
 });
     
-
-
-// app.get("/getTimePeriod", (req, res) => {
-//   res.render("maps.ejs"); 
-// });
 
 app.get("/getDistance", (req, res) => {
     client.get(url, accessToken).then(result => {

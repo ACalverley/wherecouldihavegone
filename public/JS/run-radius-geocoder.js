@@ -53,7 +53,7 @@ function getNearestCity(userLat, userLong, distanceTraveled){
         		// console.log("current city: ",currentCity);
                 // console.log("current city destination address: ",currentCity.destination_addresses[0]);
                 // console.log("nearestCity status: ", currentCity.rows[0].elements[0].status);
-
+                console.log(currentCity.rows[0]);
                 var status = currentCity.rows[0].elements[0].status;
 
                 console.log("got status");
