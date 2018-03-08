@@ -9,7 +9,7 @@ var formatQuery = require('./public/JS/formatQuery.js');
 var app = express();
 const port = process.env.PORT || 3000;
 const api_key = "AIzaSyB9b1eU1IE9Tdh0Bo8y8GMabGhMiQ-XTps";
-const callbackURL = "http://www.wherecouldihavegone.com/callback"
+const callbackURL = "http://localhost:3000/callback"
 
 
 app.use(express.static(__dirname + '/public'));
@@ -38,8 +38,8 @@ app.get('/callback', async function(req, res) {
     const {access_token:accessToken} = await client.getAccessToken(req.query.code, callbackURL);
     // console.log(access_token);
     const date = current_date('date', '-');
-    const ugandaChildDistance = 7 * 12;
-    const url = `/activities/distance/date/${date}/7d.json`;
+    const ugandaChildDistance = (3 * 30) * 12;
+    const url = `/activities/distance/date/${date}/3m.json`;
   
     const [body, response] = await client.get(url, accessToken); 
     // console.log(response.statusCode, body["activities-distance"]);
