@@ -9,7 +9,7 @@ var formatQuery = require('./public/JS/formatQuery.js');
 var app = express();
 const port = process.env.PORT || 3000;
 const api_key = "AIzaSyB9b1eU1IE9Tdh0Bo8y8GMabGhMiQ-XTps";
-const callbackURL = "http://localhost:3000/callback"
+const callbackURL = "http://www.wherecouldihavegone.com/callback"
 
 
 app.use(express.static(__dirname + '/public'));
@@ -92,7 +92,7 @@ app.get("/test", function(req, res){
 });
 
 app.get("*", function(req, res){
-   res.send("Sorry, page not found...What are you doing with your life?"); 
+   res.send("Sorry, page not found"); 
 });
 
 app.listen(port, process.env.IP, function(){
