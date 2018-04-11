@@ -1,13 +1,13 @@
 {
-  "name": "qhacks_2018",
+  "name": "wherecouldihavegone",
   "version": "1.0.0",
-  "description": "A chat example to showcase how to use `socket.io` with a static `express` server with `async` for control flow.",
+  "description": "A web app built at QHacks 2018 to show the farthest city you could have walked to using a Fitbit",
   "main": "server.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ACalverley/qhacks_2018.git"
   },
-  "author": "Mostafa Eweda <mo.eweda@gmail.com>",
+  "author": "Chris Maltais & Aidan Calverley <chris.maltais@queensu.ca>",
   "dependencies": {
     "async": "~0.2.8",
     "city-reverse-geocoder": "0.0.1",
@@ -17,11 +17,9 @@
     "fitbit-node": "^2.1.0",
     "nodemon": "^1.14.12",
     "passport": "^0.4.0",
-    "passport-fitbit-oauth2": "^1.0.2",
     "raw-body": "^2.3.2",
     "request": "^2.83.0",
-    "request-promise-native": "^1.0.5",
-    "socket.io": "~0.9.14"
+    "request-promise-native": "^1.0.5"
   },
   "scripts": {
     "start": "node app.js"

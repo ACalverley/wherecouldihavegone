@@ -8,8 +8,8 @@ var getNearestCity = require('./public/JS/run-radius-geocoder.js');
 var formatQuery = require('./public/JS/formatQuery.js');
 var app = express();
 const port = process.env.PORT || 3000;
-const api_key = "AIzaSyB9b1eU1IE9Tdh0Bo8y8GMabGhMiQ-XTps";
-const callbackURL = "http://www.wherecouldihavegone.com/callback"
+const api_key = process.env.FITBIT_API_KEY; // config done in heroku
+const callbackURL = "http://www.wherecouldihavegone.com/callback";
 
 
 app.use(express.static(__dirname + '/public'));
