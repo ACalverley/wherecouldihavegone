@@ -167,18 +167,6 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(window).scroll(function() {    
-            var scroll = $(window).scrollTop();
-
-            if (scroll >= 10) {
-                $("#navbar").removeClass("navbar-transparent");
-            } else {
-                $("#navbar").addClass("navbar-transparent");
-            }
-        });
-    </script>
-
 
     <title>Where could I have gone?</title>
 
@@ -188,14 +176,23 @@
     <!-- Bootstrap core CSS     -->
     <link href="CSS/bootstrap.min.css" rel="stylesheet" />
     <link href="CSS/paper-kit.css?v=2.1.0" rel="stylesheet" />
-
-    <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <!-- <link href="CSS/demo.css" rel="stylesheet" /> -->
+    
+    <!--AOS CSS CDN-->
+    <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
+    
+    <!--AOS JS CDN-->
+    <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
+    
+    <!--Init AOS-->
+    <script>
+        AOS.init();
+    </script>
 
     <!--     Fonts and icons     -->
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,300,700' rel='stylesheet' type='text/css'>
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-    <link href="CSS/nucleo-icons.css" rel="stylesheet" />
+    <link href="CSS/nucleo-icons.css" rel="stylesheet"/>
+    
 
     <!-- Google Maps Initialization -->
     <meta name="viewport" content="initial-scale=1.0">
@@ -261,32 +258,7 @@
             </div>
         </div>
     </nav>
-<!-- 
-<div class="navbar navbar-default navbar-fixed-top" data-spy="affix" data-offset-top="400">
-  <div class="container">
-    <div class="navbar-header">
-      <a href="#" class="navbar-brand">Brand</a>
-      <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <i class="fa fa-bars"></i>
-      </a>
-    </div>
-    <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-      </ul>
-      <ul class="nav navbar-right navbar-nav">
-        <li>
-          <a href="#">Link</a>
-        </li>
-        <li>
-          <a href="#"><span class="badge">2</span></a>
-        </li>
-      </ul>
-    </div>      
-  </div>
-</div>
--->
+
     <!-- Landing Page -->
     <div class="wrapper">
         <div class="page-header section-dark" style="background-image: url('img/antoine-barres.jpg')">
@@ -302,7 +274,7 @@
                             <img src="img/fog-low.png" alt="">
                         </div>
                     </div>
-
+                    
                    <!--  <h2 class="presentation-subtitle text-center">Connect with: </h2>
                     <div class="row">
                         <div class="col-md-5 ml-auto mr-auto download-area">
@@ -321,6 +293,7 @@
         </div>
 
         <!-- Main Map section -->
+        <section id="maps">
         <div class="container" style="padding-left: 80px;">
             <div class="tim-title">
                 <h2 padding=15px>Over the past 3 months, you have travelled
@@ -328,14 +301,14 @@
             </div>
 
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-8" data-aos="fade-right">
                     <!-- <div class="col-spaced"> -->
                     <div id="map1"></div>
                     <!-- </div> -->
                 </div>
                 <div class="col-md-4">
                     <div class="col-spaced">
-                        <div class="card">
+                        <div class="card" data-aos="fade-left">
                             <div class="card-header">Distance History</div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">1 day</li>
@@ -350,6 +323,7 @@
             </div>
 
         </div>
+        </section>
         <div class="container" style="padding-left: 80px;">
             <hr>
             <div class="row" style="margin: auto;">
@@ -388,5 +362,17 @@
         </div>
     </footer>
 </body>
+<!-- Javascript for NavBar -->
+<script type="text/javascript">
+    $(window).scroll(function() {    
+        var scroll = $(window).scrollTop();
+
+        if (scroll >= 10) {
+            $("#navbar").removeClass("navbar-transparent");
+        } else {
+            $("#navbar").addClass("navbar-transparent");
+        }
+    });
+</script>
 
 </html>
