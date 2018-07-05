@@ -28,8 +28,10 @@ According to the [Bureau of Statistics 2014 Census](http://www.ubos.org/2016/03/
 - [ ] Complete this section
 
 # To do
-- [ ] Get domain working completely (Callbacks from Fitbit API can be finnicky)
-- [ ] Display path of comparision map to front-end (Data is already present in backend)
+- [x] Get domain working completely (Callbacks from Fitbit API can be finnicky)
+- [x] Display path of comparision map to front-end (Data is already present in backend)
+- [ ] Transfer domain from domain.com to namecheap (SSL from LetsEncrypt supports namecheap, not domain.com)
+- [ ] Fix user location bug. Currently uses starting point as Heroku servers in the US
 - [ ] Quantify time to find longest city (Out of X cities, takes Y seconds to find farthest city using our algorithm)
 - [ ] Subscription service for donations: Tracks if the user walked 12km that day, charges $X per Ykm missed from goal and donates to charity selected
 - [ ] Expose data via a RESTful API
