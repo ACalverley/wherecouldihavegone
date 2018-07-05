@@ -32,24 +32,21 @@ const client = new FitbitApiClient({
 app.get("/authorize", (req, res) => {
   console.log("calling fitbit api");
     // request access to the user's activity, heartrate, location, nutrion, profile, settings, sleep, social, and weight scopes
-  res.redirect(client.getAuthorizeUrl('activity heartrate location profile settings social weight', devCallbackURL, 'login'));
+  res.redirect(client.getAuthorizeUrl('activity location profile settings social weight', devCallbackURL, 'login'));
 });
 
 
 app.get('/callback', async function(req, res) {
     const {access_token:accessToken} = await client.getAccessToken(req.query.code, devCallbackURL);
-    // console.log(access_token);
     const date = current_date('date', '-');
     const ugandaChildDistance = (3 * 30) * 12;
     const url = `/activities/distance/date/${date}/3m.json`;
 
     const [body, response] = await client.get(url, accessToken);
-    // console.log(response.statusCode, body["activities-distance"]);
 
     const distanceSum = body["activities-distance"].reduce((sum, {value})=>sum + Number(value), 0).toFixed(2);
 
     console.log("distance sum: ", distanceSum);
-    console.log(api_key);
 
     const geolocationResponse = JSON.parse(await request.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${api_key}`));
 
@@ -67,16 +64,12 @@ app.get('/callback', async function(req, res) {
 
     var user_destination = formatQuery(user_nearestCity.destination_addresses[0]);
     var ugandaChild_destination = formatQuery(ugandaChild_nearestCity.destination_addresses[0]);
+    console.log(user_nearestCity.origin_addresses[0])
     var origin = formatQuery(user_nearestCity.origin_addresses[0]);
 
     console.log("user destination:", user_destination);
     console.log("uganda child destination:", ugandaChild_destination);
     console.log("origin: ", origin);
-
-    // var neat_origin = origin.replace(/)
-
-    // console.log("destination:", destination);
-    // console.log("origin: ", origin);
 
     res.render("maps_2path.ejs", {
     	distanceTraveled: distanceSum,
@@ -86,7 +79,6 @@ app.get('/callback', async function(req, res) {
       	ugandaChild_destination: ugandaChild_destination,
       	origin: origin
     });
-    // res.render("map-test.ejs");
 });
 
 

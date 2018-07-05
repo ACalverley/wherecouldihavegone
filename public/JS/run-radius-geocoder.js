@@ -1,14 +1,14 @@
 var crg = require('./radius-geocoder.js');
 var request = require('request-promise-native');
-const api_key = "AIzaSyDAB4ymAyDZYtF7gBmFB9bJX7Zgv9HyimY";
+const api_key = process.env.geolocation_api_key;
 
 module.exports = function(userLat, userLong, distanceTraveled) {
     var origin_address, destination_address;
     var url = `https://www.googleapis.com/maps/api/geocode/json?latlng=${userLat},${userLong}&key=${api_key}`;
-    
+
    	return getNearestCity(userLat, userLong, distanceTraveled);
 
-    
+
     function getAddress(){
         request.post(url, (req, res) => {
             let parsedBody;
@@ -20,8 +20,8 @@ module.exports = function(userLat, userLong, distanceTraveled) {
             }
             origin_address = parsedBody.results[0].formatted_address;
             console.log("origin address is: ", origin_address);
-            
-            
+
+
             // res.render("test_maps.ejs",{origin_address: origin_address, destination_address: destination_address});
         });
     }
@@ -80,4 +80,3 @@ function getNearestCity(userLat, userLong, distanceTraveled){
         	.then(console.log())
         	.catch(console.error);
 }
-
