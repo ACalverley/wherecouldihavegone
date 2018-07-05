@@ -22,11 +22,6 @@
 
               // layer uganda child destination on passed map ID
               // layerMaps(map1ID);
-
-
-              // initMap1();
-              // initMap2();
-              // layerMap2();
             }
 
             function displaySeperately(map1ID, map2ID){
@@ -47,19 +42,19 @@
 
               // Instantiate a directions service.
               var directionsService1 = new google.maps.DirectionsService;
-    
+
               // Create a map and center it on user location.
               map = new google.maps.Map(document.getElementById('map1'), {
                 zoom: 13,
                 center: {lat: <%=userLat%>, lng: <%=userLong%>}
               });
-    
+
               // Create a renderer for directions and bind it to the map.
               var directionsDisplay1 = new google.maps.DirectionsRenderer({map: map});
-    
+
               // Instantiate an info window to hold step text.
               var stepDisplay1 = new google.maps.InfoWindow;
-    
+
               // Display the route between the initial start and end selections.
               calculateAndDisplayRoute(
                   directionsDisplay1, directionsService1, markerArray1, stepDisplay1, map, destination);
@@ -69,22 +64,22 @@
               var destination = "<%=ugandaChild_destination%>";
 
               var markerArray2 = [];
-    
+
               // Instantiate a directions service.
               var directionsService2 = new google.maps.DirectionsService;
-    
+
               // Create a new map and center on user location
               map = new google.maps.Map(document.getElementById('map2'), {
                 zoom: 13,
                 center: {lat: <%=userLat%>, lng: <%=userLong%>}
               });
-    
+
               // Create a renderer for directions and bind it to the map.
               var directionsDisplay2 = new google.maps.DirectionsRenderer({map: map});
-    
+
               // Instantiate an info window to hold step text.
               var stepDisplay2 = new google.maps.InfoWindow;
-    
+
               // Display the route between the initial start and end selections.
               calculateAndDisplayRoute(
                   directionsDisplay2, directionsService2, markerArray2, stepDisplay2, map, destination);
@@ -94,21 +89,21 @@
               var destination = "<%=ugandaChild_destination%>";
 
               var markerArray2 = [];
-    
+
               // Instantiate a directions service.
               var directionsService2 = new google.maps.DirectionsService;
-    
+
               // add second direction display on top of existing map
               var directionsDisplay2 = new google.maps.DirectionsRenderer({map: map});
-    
+
               // Instantiate an info window to hold step text.
               var stepDisplay2 = new google.maps.InfoWindow;
-    
+
               // Display the route between the initial start and end selections.
               calculateAndDisplayRoute(
                   directionsDisplay2, directionsService2, markerArray2, stepDisplay2, map, destination);
             }
-    
+
             function calculateAndDisplayRoute(directionsDisplay, directionsService,
                 markerArray, stepDisplay, map, destination) {
               console.log(map);
@@ -116,11 +111,11 @@
               for (var i = 0; i < markerArray.length; i++) {
                 markerArray[i].setMap(null);
               }
-    
+
               // Retrieve the start and end locations and create a DirectionsRequest using
               // WALKING directions.
               directionsService.route({
-                origin: "<%= origin %>",  
+                origin: "<%= origin %>",
                 destination: destination,
                 travelMode: 'WALKING'
               }, function(response, status) {
@@ -138,7 +133,7 @@
                 }
               });
             }
-    
+
             function showSteps(directionResult, markerArray, stepDisplay, map) {
               // For each step, place a marker, and add the text to the marker's infowindow.
               // Also attach the marker to an array so we can keep track of it and remove it
@@ -152,7 +147,7 @@
                     stepDisplay, marker, myRoute.steps[i].instructions, map);
               }
             }
-    
+
             function attachInstructionText(stepDisplay, marker, text, map) {
               google.maps.event.addListener(marker, 'click', function() {
                 // Open an info window when the marker is clicked on, containing the text
@@ -176,13 +171,13 @@
     <!-- Bootstrap core CSS     -->
     <link href="CSS/bootstrap.min.css" rel="stylesheet" />
     <link href="CSS/paper-kit.css?v=2.1.0" rel="stylesheet" />
-    
+
     <!--AOS CSS CDN-->
     <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
-    
+
     <!--AOS JS CDN-->
     <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
-    
+
     <!--Init AOS-->
     <script>
         AOS.init();
@@ -192,7 +187,7 @@
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,300,700' rel='stylesheet' type='text/css'>
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href="CSS/nucleo-icons.css" rel="stylesheet"/>
-    
+
 
     <!-- Google Maps Initialization -->
     <meta name="viewport" content="initial-scale=1.0">
@@ -274,7 +269,7 @@
                             <img src="img/fog-low.png" alt="">
                         </div>
                     </div>
-                    
+
                    <!--  <h2 class="presentation-subtitle text-center">Connect with: </h2>
                     <div class="row">
                         <div class="col-md-5 ml-auto mr-auto download-area">
@@ -364,7 +359,7 @@
 </body>
 <!-- Javascript for NavBar -->
 <script type="text/javascript">
-    $(window).scroll(function() {    
+    $(window).scroll(function() {
         var scroll = $(window).scrollTop();
 
         if (scroll >= 10) {
