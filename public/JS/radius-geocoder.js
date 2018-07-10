@@ -26,7 +26,7 @@ function findCityMinimumRadius(lat, lon, dist, deg) {
     var lat2 = toDegrees(φ2);
     var lon2 = toDegrees(λ2);
 
-    //console.log(crg(lat2, lon2, 1));
+    console.log(crg(lat2, lon2, 1));
     return crg(lat2, lon2, 1);
 }
 
