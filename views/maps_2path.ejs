@@ -11,98 +11,110 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
     <script>
-    var map;
+        var map;
+        function initMaps(){
+            var map1ID = 'map1';
+            var map2ID = 'map2';
 
-            function initMaps(){
-              var map1ID = 'map1';
-              var map2ID = 'map2';
+            // dispay user and uganda child destintaion on seperate maps
+            displaySeperately(map1ID, map2ID);
 
-              // dispay user and uganda child destintaion on seperate maps
-              displaySeperately(map1ID, map2ID);
+            // layer uganda child destination on passed map ID
+            // layerMaps(map1ID);
+        }
 
-              // layer uganda child destination on passed map ID
-              // layerMaps(map1ID);
-            }
+        function displaySeperately(map1ID, map2ID){
+            initMap1();
+            initMap2();
+        }
 
-            function displaySeperately(map1ID, map2ID){
-              initMap1();
-              initMap2();
-            }
+        // HAD TO COMMENT THIS OUT, MAPS WERE NOT LOADING
+        /*function layerMaps(map1ID){
+            initMap1();
+            layerMap2();
+        }*/
 
-            function layerMaps(map1ID){
-              initMap1();
-              layerMap2();
-            }
-
-
-            function initMap1(){
-              var destination = "<%=user_destination%>";
-
-              var markerArray1 = [];
-
-              // Instantiate a directions service.
-              var directionsService1 = new google.maps.DirectionsService;
-
-              // Create a map and center it on user location.
-              map = new google.maps.Map(document.getElementById('map1'), {
+        function initMap1(){
+            var destination = "<%=user_destination%>";
+            var markerArray1 = [];
+            // Instantiate a directions service.
+            var directionsService1 = new google.maps.DirectionsService;
+            // Create a map and center it on user location.
+            map = new google.maps.Map(document.getElementById('map1'), {
                 zoom: 13,
                 center: {lat: <%=userLat%>, lng: <%=userLong%>}
-              });
+            });
 
-              // Create a renderer for directions and bind it to the map.
-              var directionsDisplay1 = new google.maps.DirectionsRenderer({map: map});
+            // Create a renderer for directions and bind it to the map.
+            var directionsDisplay1 = new google.maps.DirectionsRenderer({map: map});
 
-              // Instantiate an info window to hold step text.
-              var stepDisplay1 = new google.maps.InfoWindow;
+            // Instantiate an info window to hold step text.
+            var stepDisplay1 = new google.maps.InfoWindow;
 
-              // Display the route between the initial start and end selections.
-              calculateAndDisplayRoute(
-                  directionsDisplay1, directionsService1, markerArray1, stepDisplay1, map, destination);
-            }
+            // Display the route between the initial start and end selections.
+            calculateAndDisplayRoute(
+                directionsDisplay1,
+                directionsService1,
+                markerArray1,
+                stepDisplay1,
+                map,
+                destination
+            );
+        }
 
-            function initMap2(){
-              var destination = "<%=ugandaChild_destination%>";
+        function initMap2(){
+            var destination = "<%=ugandaChild_destination%>";
+            var markerArray2 = [];
 
-              var markerArray2 = [];
+            // Instantiate a directions service.
+            var directionsService2 = new google.maps.DirectionsService;
 
-              // Instantiate a directions service.
-              var directionsService2 = new google.maps.DirectionsService;
-
-              // Create a new map and center on user location
-              map = new google.maps.Map(document.getElementById('map2'), {
+            // Create a new map and center on user location
+            map = new google.maps.Map(document.getElementById('map2'), {
                 zoom: 13,
                 center: {lat: <%=userLat%>, lng: <%=userLong%>}
-              });
+            });
 
-              // Create a renderer for directions and bind it to the map.
-              var directionsDisplay2 = new google.maps.DirectionsRenderer({map: map});
+            // Create a renderer for directions and bind it to the map.
+            var directionsDisplay2 = new google.maps.DirectionsRenderer({map: map});
 
-              // Instantiate an info window to hold step text.
-              var stepDisplay2 = new google.maps.InfoWindow;
+            // Instantiate an info window to hold step text.
+            var stepDisplay2 = new google.maps.InfoWindow;
 
-              // Display the route between the initial start and end selections.
-              calculateAndDisplayRoute(
-                  directionsDisplay2, directionsService2, markerArray2, stepDisplay2, map, destination);
-            }
+            // Display the route between the initial start and end selections.
+            calculateAndDisplayRoute(
+                directionsDisplay2,
+                directionsService2,
+                markerArray2,
+                stepDisplay2,
+                map,
+                destination
+            );
+        }
 
-            function layerMap2(){
-              var destination = "<%=ugandaChild_destination%>";
+        function layerMap2(){
+            var destination = "<%=ugandaChild_destination%>";
+            var markerArray2 = [];
 
-              var markerArray2 = [];
+            // Instantiate a directions service.
+            var directionsService2 = new google.maps.DirectionsService;
 
-              // Instantiate a directions service.
-              var directionsService2 = new google.maps.DirectionsService;
+            // add second direction display on top of existing map
+            var directionsDisplay2 = new google.maps.DirectionsRenderer({map: map});
 
-              // add second direction display on top of existing map
-              var directionsDisplay2 = new google.maps.DirectionsRenderer({map: map});
+            // Instantiate an info window to hold step text.
+            var stepDisplay2 = new google.maps.InfoWindow;
 
-              // Instantiate an info window to hold step text.
-              var stepDisplay2 = new google.maps.InfoWindow;
-
-              // Display the route between the initial start and end selections.
-              calculateAndDisplayRoute(
-                  directionsDisplay2, directionsService2, markerArray2, stepDisplay2, map, destination);
-            }
+            // Display the route between the initial start and end selections.
+            calculateAndDisplayRoute(
+                directionsDisplay2,
+                directionsService2,
+                markerArray2,
+                stepDisplay2,
+                map,
+                destination
+            );
+        }
 
             function calculateAndDisplayRoute(directionsDisplay, directionsService,
                 markerArray, stepDisplay, map, destination) {
@@ -129,7 +141,8 @@
                   console.log(response);
                   // showSteps(response, markerArray, stepDisplay, map);
                 } else {
-                  window.alert('Directions request failed due to ' + status);
+                    console.log("Could not calculate and display route in LayerMap2")
+                    window.alert('Directions request failed due to ' + status);
                 }
               });
             }
@@ -158,7 +171,7 @@
             }
     </script>
 
-    <script type="text/javascript" async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9b1eU1IE9Tdh0Bo8y8GMabGhMiQ-XTps&libraries=drawing&callback=initMaps"></script>
+    <script type="text/javascript" async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9YrkTByrWhKXp8wNIQ5w6IgoiCD2ae0w&libraries=drawing&callback=initMaps"></script>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -171,17 +184,6 @@
     <!-- Bootstrap core CSS     -->
     <link href="CSS/bootstrap.min.css" rel="stylesheet" />
     <link href="CSS/paper-kit.css?v=2.1.0" rel="stylesheet" />
-
-    <!--AOS CSS CDN-->
-    <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
-
-    <!--AOS JS CDN-->
-    <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
-
-    <!--Init AOS-->
-    <script>
-        AOS.init();
-    </script>
 
     <!--     Fonts and icons     -->
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,300,700' rel='stylesheet' type='text/css'>
@@ -229,19 +231,19 @@
                     <li class="nav-item">
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" rel="tooltip" title="Like us on Facebook" data-placement="bottom" href="https://www.facebook.com/CreativeTim" target="_blank">
+                        <a class="nav-link" rel="tooltip" title="Like Tim on Facebook" data-placement="bottom" href="https://www.facebook.com/CreativeTim" target="_blank">
                             <i class="fa fa-facebook-square"></i>
                             <p class="d-lg-none">Facebook</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" rel="tooltip" title="Follow us on Instagram" data-placement="bottom" href="https://www.instagram.com/CreativeTimOfficial" target="_blank">
+                        <a class="nav-link" rel="tooltip" title="Follow Tim on Instagram" data-placement="bottom" href="https://www.instagram.com/CreativeTimOfficial" target="_blank">
                             <i class="fa fa-instagram"></i>
                             <p class="d-lg-none">Instagram</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" rel="tooltip" title="Star on GitHub" data-placement="bottom" href="https://github.com/ACalverley/qhacks_2018" target="_blank">
+                        <a class="nav-link" rel="tooltip" title="Star on GitHub" data-placement="bottom" href="https://github.com/chrismaltais/wherecouldihavegone" target="_blank">
                             <i class="fa fa-github"></i>
                             <p class="d-lg-none">GitHub</p>
                         </a>
@@ -296,14 +298,14 @@
             </div>
 
             <div class="row">
-                <div class="col-md-8" data-aos="fade-right">
+                <div class="col-md-8">
                     <!-- <div class="col-spaced"> -->
                     <div id="map1"></div>
                     <!-- </div> -->
                 </div>
                 <div class="col-md-4">
                     <div class="col-spaced">
-                        <div class="card" data-aos="fade-left">
+                        <div class="card">
                             <div class="card-header">Distance History</div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">1 day</li>
@@ -336,7 +338,7 @@
                 </div>
                 <div class="col-md-8">
                     <!-- <div class="col-spaced"> -->
-                        <div class="mapClass" id="map2"></div>
+                        <div id="map2"></div>
                     <!-- </div> -->
                 </div>
 

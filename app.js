@@ -9,7 +9,7 @@ var getNearestCity = require('./public/JS/run-radius-geocoder.js');
 var formatQuery = require('./public/JS/formatQuery.js');
 var app = express();
 const port = process.env.PORT || 3000;
-const api_key = process.env.geolocation_api_key; // config done in heroku
+const api_key = process.env.distanceMatrix_api_key; // config done in heroku
 const callbackURL = "http://www.wherecouldihavegone.com/callback";
 const devCallbackURL = "http://localhost:3000/callback";
 
@@ -48,6 +48,7 @@ app.get('/callback', async function(req, res) {
 
     console.log("distance sum: ", distanceSum);
 
+    // geoLocation Response needs to be bumped to HTML request from browser
     const geolocationResponse = JSON.parse(await request.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${api_key}`));
 
     console.log("geolocation response:", geolocationResponse);
