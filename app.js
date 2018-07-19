@@ -9,11 +9,12 @@ var getNearestCity = require('./public/JS/run-radius-geocoder.js');
 var formatQuery = require('./public/JS/formatQuery.js');
 var app = express();
 const port = process.env.PORT || 3000;
-const api_key = process.env.distanceMatrix_api_key; // config done in heroku
+const api_key = process.env.GOOGLEMAPS_API_KEY; // config done in heroku
+const letsEncryptResponse = process.env.CERTBOT_RESPONSE
 const callbackURL = "http://www.wherecouldihavegone.com/callback";
 const devCallbackURL = "http://localhost:3000/callback";
 
-
+app.use(express.static(__dirname, { dotfiles: 'allow' } ));
 app.use(express.static(__dirname + '/public'));
 
 var resPath = "activities/distance/date/";
@@ -23,10 +24,15 @@ var accessToken;
 var userLat, userLong;
 
 const client = new FitbitApiClient({
-  clientId: process.env.fitbit_clientId,
-  clientSecret: process.env.fitbit_clientSecret,
+  clientId: process.env.FITBIT_CLIENTID,
+  clientSecret: process.env.FITBIT_CLIENT_SECRET,
   apiVersion: '1.2' // 1.2 is the default
 });
+
+// Return the Let's Encrypt certbot response:
+//app.get('/.well-known/acme-challenge/:content', function(req, res) {
+//  res.send(letsEncryptReponse);
+//});
 
 // redirect the user to the Fitbit authorization page
 app.get("/authorize", (req, res) => {
