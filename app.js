@@ -38,12 +38,12 @@ const client = new FitbitApiClient({
 app.get("/authorize", (req, res) => {
   console.log("calling fitbit api");
     // request access to the user's activity, heartrate, location, nutrion, profile, settings, sleep, social, and weight scopes
-  res.redirect(client.getAuthorizeUrl('activity location profile settings social weight', devCallbackURL, 'login'));
+  res.redirect(client.getAuthorizeUrl('activity location profile settings social weight', callbackURL, 'login'));
 });
 
 
 app.get('/callback', async function(req, res) {
-    const {access_token:accessToken} = await client.getAccessToken(req.query.code, devCallbackURL);
+    const {access_token:accessToken} = await client.getAccessToken(req.query.code, callbackURL);
     const date = current_date('date', '-');
     const ugandaChildDistance = (3 * 30) * 12;
     const url = `/activities/distance/date/${date}/3m.json`;
