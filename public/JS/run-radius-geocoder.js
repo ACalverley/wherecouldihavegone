@@ -1,6 +1,6 @@
 var crg = require('./radius-geocoder.js');
 var request = require('request-promise-native');
-const api_key = process.env.distanceMatrix_api_key;
+const api_key = process.env.GOOGLEMAPS_API_KEY;
 
 module.exports = function(userLat, userLong, distanceTraveled) {
     var origin_address, destination_address;
