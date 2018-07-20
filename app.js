@@ -1,18 +1,32 @@
 //use express
 require('dotenv').config();
-var express = require("express");
-var passport = require('passport');
-var current_date = require("current-date");
-var FitbitApiClient = require("fitbit-node");
-var request = require('request-promise-native');
-var getNearestCity = require('./public/JS/run-radius-geocoder.js');
-var formatQuery = require('./public/JS/formatQuery.js');
-var app = express();
+const fs = require('fs');
+const express = require("express");
+const passport = require('passport');
+const current_date = require("current-date");
+const FitbitApiClient = require("fitbit-node");
+const request = require('request-promise-native');
+const getNearestCity = require('./public/JS/run-radius-geocoder.js');
+const formatQuery = require('./public/JS/formatQuery.js');
+const app = express();
 const port = process.env.PORT || 3000;
 const api_key = process.env.GOOGLEMAPS_API_KEY; // config done in heroku
 const letsEncryptResponse = process.env.CERTBOT_RESPONSE
 const callbackURL = "http://www.wherecouldihavegone.com/callback";
 const devCallbackURL = "http://localhost:3000/callback";
+
+// SSL Certificate
+/*
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/chain.pem', 'utf8');
+
+const credentials = {
+	key: privateKey,
+	cert: certificate,
+	ca: ca
+};
+*/
 
 app.use(express.static(__dirname, { dotfiles: 'allow' } ));
 app.use(express.static(__dirname + '/public'));
