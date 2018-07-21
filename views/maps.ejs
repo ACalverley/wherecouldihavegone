@@ -23,8 +23,8 @@
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,300,700' rel='stylesheet' type='text/css'>
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href="CSS/nucleo-icons.css" rel="stylesheet" />
-    
-    <!-- Google Maps Initialization --> 
+
+    <!-- Google Maps Initialization -->
     <meta name="viewport" content="initial-scale=1.0">
     <style>
       /* Always set the map height explicitly to define the size of the div
@@ -67,7 +67,7 @@
                             <p class="d-lg-none">GitHub</p>
                         </a>
                     </li>
-                    
+
                     <li class="nav-item">
 						<a href="https://chimp.net/groups/the-walking-school-bus-presents-access-in-motion-5km" target="_blank" class="btn btn-success btn-round">Donate</a>
 					</li>
@@ -95,62 +95,62 @@
             <div class="moving-clouds" style="background-image: url('img/clouds.png'); ">
 
             </div>
-            
+
     		<h6 class="category category-absolute">Created by
     			<a href="https://github.com/ACalverley/qhacks_2018" target="_blank">
     				the QHackers </a><br>Design by <a href="https://www.creative-tim.com" target="_blank">Creative Tim
                  </a>
     		</h6>
-            
+
     	</div>
-        
-        <!-- Main Map section --> 
+
+        <!-- Main Map section -->
         <div class="container" style="padding-left: 80px;">
 <!--            <div class="section section-buttons">-->
-            
+
             <div class="tim-title">
                 <h2>Over the past 30 days, you have travelled <%= distanceTraveled %> km</h2>
             </div>
-            
+
             <div class="row">
-                
+
                 <div class="col-md-8">
                     <div class="col-spaced">
                         <div class="mapClass" id="map1"></div>
-                    </div>    
+                    </div>
                 </div>
-                
+
                 <div class="col-md-4">
                     <div class="col-spaced">
                         <div class="card">
-                            <div class="card-header">Distance History</div> 
+                            <div class="card-header">Distance History</div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">1 day</li>
                                 <li class="list-group-item">1 week</li>
                                 <li class="list-group-item" style="background: #51bcda;">1 month</li>
                                 <li class="list-group-item">All time</li>
-                            </ul>                        
+                            </ul>
                         </div>
                     </div>
-                </div> 
-                
-            </div> 
-            
+                </div>
+
+            </div>
+
         </div>
 <!--            </div>-->
-        
+
         <div class="container" style="padding-left: 80px;">
 <!--            <div class="section section-buttons">-->
-            
+
             <hr>
             <div class="row" style="margin: auto;">
-            
+
             <div class="col-md-4" >
                 <div class="col-spaced">
                     <div class="card">
                         <div class="card-header"><b>Perspective</b></div>
                         <div class="card-body">
-                            
+
                             <p class="card-text">According to the Uganda Bureau of Statistics, Ugandan children have to walk an average of 12km a day for the opportunity to get an education. This would have been their trek over ### days. </p>
                         </div>
                     </div>
@@ -159,20 +159,20 @@
             <div class="col-md-4">
                 <div class="col-spaced">
                     <div class="mapClass" id="map2"></div>
-                </div>    
+                </div>
             </div>
-                
+
             <div class="col-md-4">
                 <div class="col-spaced">
                     <div class="mapClass" id="map3"></div>
                 </div>
             </div>
-                
-            </div>        
-        </div> 
+
+            </div>
+        </div>
             <br/>
 	</div>
-        
+
     <footer class="footer">
         <div class="container">
             <hr>
@@ -204,12 +204,12 @@
             zoom: 15,
             center: {lat: <%= userLat %>, lng: <%= userLong %>}
         });
-        
+
         var map2 = new google.maps.Map(document.getElementById('map2'), {
             zoom: 15,
             center: {lat: <%= userLat %>, lng: <%= userLong %>}
         });
-        
+
         var map3 = new google.maps.Map(document.getElementById('map3'), {
             zoom: 15,
             center: {lat: <%= userLat %>, lng: <%= userLong %>}
@@ -226,10 +226,10 @@
         // Display the route between the initial start and end selections.
         calculateAndDisplayRoute(
             directionsDisplay1, directionsService, markerArray, stepDisplay, map1);
-            
+
         calculateAndDisplayRoute(
             directionsDisplay2, directionsService, markerArray, stepDisplay, map2);
-            
+
         calculateAndDisplayRoute(
             directionsDisplay3, directionsService, markerArray, stepDisplay, map3);
         // Listen to change events from the start and end lists.
@@ -237,22 +237,22 @@
           calculateAndDisplayRoute(
               directionsDisplay1, directionsService, markerArray, stepDisplay, map1);
         };
-        
+
         var onChangeHandler2 = function() {
           calculateAndDisplayRoute(
               directionsDisplay2, directionsService, markerArray, stepDisplay, map2);
         };
-        
+
         var onChangeHandler3 = function() {
           calculateAndDisplayRoute(
               directionsDisplay3, directionsService, markerArray, stepDisplay, map3);
         };
         document.getElementById('start').addEventListener('change', onChangeHandler1);
         document.getElementById('end').addEventListener('change', onChangeHandler1);
-        
+
         document.getElementById('start').addEventListener('change', onChangeHandler2);
         document.getElementById('end').addEventListener('change', onChangeHandler2);
-        
+
         document.getElementById('start').addEventListener('change', onChangeHandler3);
         document.getElementById('end').addEventListener('change', onChangeHandler3);
       }
@@ -285,7 +285,7 @@
           }
         });
       }
-      
+
       function calculateAndDisplayRoute2(directionsDisplay, directionsService,
           markerArray, stepDisplay, map) {
         // First, remove any existing markers from the map.
@@ -314,8 +314,8 @@
           }
         });
       }
-      
-      
+
+
       function calculateAndDisplayRoute3(directionsDisplay, directionsService,
           markerArray, stepDisplay, map) {
         // First, remove any existing markers from the map.
@@ -375,7 +375,7 @@
 <!--    var map1;-->
 <!--    var map2;-->
 <!--    var map3;-->
-    
+
 <!--    function initMap() {-->
 <!--    map1 = new google.maps.Map(document.getElementById('map1'), {-->
 <!--        center: {lat: -34.397, lng: 150.644},-->
