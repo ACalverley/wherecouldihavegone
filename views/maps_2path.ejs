@@ -10,22 +10,34 @@
     <link rel="apple-touch-icon" sizes="76x76" href="img/footprints.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <script>
+    <script type="text/javascript">
         var map;
+
         function initMaps(){
             var map1ID = 'map1';
             var map2ID = 'map2';
 
-            // dispay user and uganda child destintaion on seperate maps
-            displaySeperately(map1ID, map2ID);
+            // // dispay user and uganda child destintaion on seperate maps
+            // displaySeperately(map1ID, map2ID);
 
-            // layer uganda child destination on passed map ID
-            // layerMaps(map1ID);
+            // // layer uganda child destination on passed map ID
+            // // layerMaps(map1ID);
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(displaySeperately, error);
+            } else {
+                error('Geolocation not supported on this browser.')
+            }
         }
 
-        function displaySeperately(map1ID, map2ID){
-            initMap1();
-            initMap2();
+        // if the user doesn't allow their location to be revealed - should add image inside maps to say "Only available if you let us know your location!"
+        function error(msg) {
+            console.log(msg);
+        }
+
+        function displaySeperately(position){
+            initMap1(position);
+            initMap2(position);
         }
 
         // HAD TO COMMENT THIS OUT, MAPS WERE NOT LOADING
@@ -34,15 +46,22 @@
             layerMap2();
         }*/
 
-        function initMap1(){
+        function initMap1(position){
             var destination = "<%=user_destination%>";
             var markerArray1 = [];
             // Instantiate a directions service.
             var directionsService1 = new google.maps.DirectionsService;
-            // Create a map and center it on user location.
+
+            // Create a map and center it on user location from app.js
+            // map = new google.maps.Map(document.getElementById('map1'), {
+            //     zoom: 13,
+            //     center: {lat: <%=userLat%>, lng: <%=userLong%>}
+            // });
+
+            // Create a map and center it on user location from browser prompt
             map = new google.maps.Map(document.getElementById('map1'), {
                 zoom: 13,
-                center: {lat: <%=userLat%>, lng: <%=userLong%>}
+                center: {lat: position.coords.latitude, lng: position.coords.longitude}
             });
 
             // Create a renderer for directions and bind it to the map.
@@ -62,7 +81,7 @@
             );
         }
 
-        function initMap2(){
+        function initMap2(position){
             var destination = "<%=ugandaChild_destination%>";
             var markerArray2 = [];
 
@@ -70,9 +89,15 @@
             var directionsService2 = new google.maps.DirectionsService;
 
             // Create a new map and center on user location
+            // map = new google.maps.Map(document.getElementById('map2'), {
+            //     zoom: 13,
+            //     center: {lat: <%=userLat%>, lng: <%=userLong%>}
+            // });
+
+            // Create a map and center it on user location from browser prompt
             map = new google.maps.Map(document.getElementById('map2'), {
                 zoom: 13,
-                center: {lat: <%=userLat%>, lng: <%=userLong%>}
+                center: {lat: position.coords.latitude, lng: position.coords.longitude}
             });
 
             // Create a renderer for directions and bind it to the map.
@@ -116,59 +141,60 @@
             );
         }
 
-            function calculateAndDisplayRoute(directionsDisplay, directionsService,
-                markerArray, stepDisplay, map, destination) {
-              console.log(map);
-              // First, remove any existing markers from the map.
-              for (var i = 0; i < markerArray.length; i++) {
-                markerArray[i].setMap(null);
-              }
+        function calculateAndDisplayRoute(directionsDisplay, directionsService,
+            markerArray, stepDisplay, map, destination) {
+          console.log(map);
+          // First, remove any existing markers from the map.
+          for (var i = 0; i < markerArray.length; i++) {
+            markerArray[i].setMap(null);
+          }
 
-              // Retrieve the start and end locations and create a DirectionsRequest using
-              // WALKING directions.
-              directionsService.route({
-                origin: "<%= origin %>",
-                destination: destination,
-                travelMode: 'WALKING'
-              }, function(response, status) {
-                // Route the directions and pass the response to a function to create
-                // markers for each step.
-                if (status === 'OK') {
-                  // document.getElementById('warnings-panel').innerHTML =
-                  //     '<b>' + response.routes[0].warnings + '</b>';
-                  directionsDisplay.setDirections(response);
-                  console.log("made it here");
-                  console.log(response);
-                  // showSteps(response, markerArray, stepDisplay, map);
-                } else {
-                    console.log("Could not calculate and display route in LayerMap2")
-                    window.alert('Directions request failed due to ' + status);
-                }
-              });
+          // Retrieve the start and end locations and create a DirectionsRequest using
+          // WALKING directions.
+          directionsService.route({
+            origin: "<%= origin %>",
+            destination: destination,
+            travelMode: 'WALKING'
+          }, function(response, status) {
+            // Route the directions and pass the response to a function to create
+            // markers for each step.
+            if (status === 'OK') {
+              // document.getElementById('warnings-panel').innerHTML =
+              //     '<b>' + response.routes[0].warnings + '</b>';
+              directionsDisplay.setDirections(response);
+              console.log("made it here");
+              console.log(response);
+              // showSteps(response, markerArray, stepDisplay, map);
+            } else {
+                console.log("Could not calculate and display route in LayerMap2")
+                window.alert('Directions request failed due to ' + status);
             }
+          });
+        }
 
-            function showSteps(directionResult, markerArray, stepDisplay, map) {
-              // For each step, place a marker, and add the text to the marker's infowindow.
-              // Also attach the marker to an array so we can keep track of it and remove it
-              // when calculating new routes.
-              var myRoute = directionResult.routes[0].legs[0];
-              for (var i = 0; i < myRoute.steps.length; i++) {
-                var marker = markerArray[i] = markerArray[i] || new google.maps.Marker;
-                marker.setMap(map);
-                marker.setPosition(myRoute.steps[i].start_location);
-                attachInstructionText(
-                    stepDisplay, marker, myRoute.steps[i].instructions, map);
-              }
-            }
+        function showSteps(directionResult, markerArray, stepDisplay, map) {
+          // For each step, place a marker, and add the text to the marker's infowindow.
+          // Also attach the marker to an array so we can keep track of it and remove it
+          // when calculating new routes.
+          var myRoute = directionResult.routes[0].legs[0];
+          for (var i = 0; i < myRoute.steps.length; i++) {
+            var marker = markerArray[i] = markerArray[i] || new google.maps.Marker;
+            marker.setMap(map);
+            marker.setPosition(myRoute.steps[i].start_location);
+            attachInstructionText(
+                stepDisplay, marker, myRoute.steps[i].instructions, map);
+          }
+        }
 
-            function attachInstructionText(stepDisplay, marker, text, map) {
-              google.maps.event.addListener(marker, 'click', function() {
-                // Open an info window when the marker is clicked on, containing the text
-                // of the step.
-                stepDisplay.setContent(text);
-                stepDisplay.open(map, marker);
-              });
-            }
+        function attachInstructionText(stepDisplay, marker, text, map) {
+          google.maps.event.addListener(marker, 'click', function() {
+            // Open an info window when the marker is clicked on, containing the text
+            // of the step.
+            stepDisplay.setContent(text);
+            stepDisplay.open(map, marker);
+          });
+        }
+
     </script>
 
     <script type="text/javascript" async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9YrkTByrWhKXp8wNIQ5w6IgoiCD2ae0w&libraries=drawing&callback=initMaps"></script>
