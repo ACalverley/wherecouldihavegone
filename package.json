@@ -5,17 +5,19 @@
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ACalverley/qhacks_2018.git"
+    "url": "git+https://github.com/chrismaltais/wherecouldihavegone.git"
   },
   "author": "Chris Maltais & Aidan Calverley <chris.maltais@queensu.ca>",
   "dependencies": {
     "aos": "^2.2.0",
     "async": "~0.2.8",
+    "axios": "^0.18.0",
     "city-reverse-geocoder": "0.0.1",
     "current-date": "^0.1.1",
     "dotenv": "^6.0.0",
     "ejs": "^2.5.7",
     "express": "^4.16.3",
+    "express-http-to-https": "^1.1.4",
     "fitbit-node": "^2.1.0",
     "nodemon": "^1.14.12",
     "passport": "^0.4.0",
@@ -29,7 +31,7 @@
   "devDependencies": {},
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ACalverley/qhacks_2018/issues"
+    "url": "https://github.com/chrismaltais/wherecouldihavegone/issues"
   },
-  "homepage": "https://github.com/ACalverley/qhacks_2018#readme"
+  "homepage": "https://github.com/chrismaltais/wherecouldihavegone#readme"
 }

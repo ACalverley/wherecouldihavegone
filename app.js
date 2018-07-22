@@ -1,19 +1,20 @@
 //use express
 require('dotenv').config();
-const fs = require('fs');
-const express = require("express");
-const passport = require('passport');
-const current_date = require("current-date");
-const FitbitApiClient = require("fitbit-node");
-const request = require('request-promise-native');
-const getNearestCity = require('./public/JS/run-radius-geocoder.js');
-const formatQuery = require('./public/JS/formatQuery.js');
-const app = express();
+let fs = require('fs');
+let express = require("express");
+let passport = require('passport');
+let current_date = require("current-date");
+let FitbitApiClient = require("fitbit-node");
+let request = require('request-promise-native');
+let getNearestCity = require('./public/JS/run-radius-geocoder.js');
+let formatQuery = require('./public/JS/formatQuery.js');
+let getLocation = require('./public/JS/location.js')
+let app = express();
 const port = process.env.PORT || 3000;
 const api_key = process.env.GOOGLEMAPS_API_KEY; // config done in heroku
 const letsEncryptResponse = process.env.CERTBOT_RESPONSE
 const callbackURL = "http://www.wherecouldihavegone.com/callback";
-const devCallbackURL = "http://localhost:3000/callback";
+const devCallbackURL = "http://www.localhost:3000/callback";
 
 // SSL Certificate
 /*
@@ -52,12 +53,12 @@ const client = new FitbitApiClient({
 app.get("/authorize", (req, res) => {
   console.log("calling fitbit api");
     // request access to the user's activity, heartrate, location, nutrion, profile, settings, sleep, social, and weight scopes
-  res.redirect(client.getAuthorizeUrl('activity location profile settings social weight', callbackURL, 'login'));
+  res.redirect(client.getAuthorizeUrl('activity location profile settings social weight', devCallbackURL, 'login'));
 });
 
 
 app.get('/callback', async function(req, res) {
-    const {access_token:accessToken} = await client.getAccessToken(req.query.code, callbackURL);
+    const {access_token:accessToken} = await client.getAccessToken(req.query.code, devCallbackURL);
     const date = current_date('date', '-');
     const ugandaChildDistance = (3 * 30) * 12;
     const url = `/activities/distance/date/${date}/3m.json`;
@@ -68,11 +69,11 @@ app.get('/callback', async function(req, res) {
 
     console.log("distance sum: ", distanceSum);
 
-    // geoLocation Response needs to be bumped to HTML request from browser
+    //var userPosition = getLocation.getLocationFromBrowser()
+    //console.log(userPosition)
+    //geoLocation Response needs to be bumped to HTML request from browser
     const geolocationResponse = JSON.parse(await request.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${api_key}`));
-
     console.log("geolocation response:", geolocationResponse);
-
     userLat = geolocationResponse.location.lat;
     userLong = geolocationResponse.location.lng;
     // res.send(`lat is: ${userLat}, long is: ${userLong}`);
