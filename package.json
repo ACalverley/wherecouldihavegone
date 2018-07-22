@@ -7,7 +7,7 @@
     "type": "git",
     "url": "git+https://github.com/chrismaltais/wherecouldihavegone.git"
   },
-  "author": "Chris Maltais & Aidan Calverley <chris.maltais@queensu.ca>",
+  "author": "Chris Maltais <chris.maltais@queensu.ca> & Aidan Calverley <aidan.calverley@gmail.com>",
   "dependencies": {
     "aos": "^2.2.0",
     "async": "~0.2.8",
@@ -15,14 +15,14 @@
     "city-reverse-geocoder": "0.0.1",
     "current-date": "^0.1.1",
     "dotenv": "^6.0.0",
-    "ejs": "^2.5.7",
+    "ejs": "^2.6.1",
     "express": "^4.16.3",
     "express-http-to-https": "^1.1.4",
     "fitbit-node": "^2.1.0",
-    "nodemon": "^1.14.12",
+    "nodemon": "^1.18.3",
     "passport": "^0.4.0",
-    "raw-body": "^2.3.2",
-    "request": "^2.83.0",
+    "raw-body": "^2.3.3",
+    "request": "^2.87.0",
     "request-promise-native": "^1.0.5"
   },
   "scripts": {
