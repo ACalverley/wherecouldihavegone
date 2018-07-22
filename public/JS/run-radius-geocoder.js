@@ -1,5 +1,6 @@
 var crg = require('./radius-geocoder.js');
 var request = require('request-promise-native');
+require('dotenv').config();
 const api_key = process.env.GOOGLEMAPS_API_KEY;
 
 module.exports = function(userLat, userLong, distanceTraveled) {
@@ -32,14 +33,14 @@ function getNearestCity(userLat, userLong, distanceTraveled){
         // Return the nearest cities within a certain distance of the provided lat/lon
         var results = crg(userLat, userLong, distanceTraveled);
 
-        // console.log("results: ",results);
+        // console.log("results: ", results);
         console.log(userLat)
         console.log(userLong)
         console.log(api_key)
 
         // Slice = Extracts part of string and returns extracted part of new string (why would we want to slice this at 50?)
         // Map =
-        const promises = results.slice(0, 50).map((city)=> request.get(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${userLat},${userLong}&destinations=${city.latitude},${city.longitude}&key=${api_key}&mode=walking&units=metric`));
+        const promises = results.slice(0, 50).map((city) => request.get(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${userLat},${userLong}&destinations=${city.latitude},${city.longitude}&key=${api_key}&mode=walking&units=metric`));
 
         // console.log("promises: ", promises);
 
@@ -51,8 +52,8 @@ function getNearestCity(userLat, userLong, distanceTraveled){
         // Uncertain about Promise.all functionality
         // Uncertain about reduce(nearestCity, currentCity)
         return Promise.all(promises)
-        	.then((responses)=> responses.map(o=>JSON.parse(o)))
-        	.then((responses)=> responses.reduce((nearestCity, currentCity)=>{
+        	.then((responses) => responses.map(o=>JSON.parse(o)))
+        	.then((responses) => responses.reduce((nearestCity, currentCity)=>{
         		// console.log("city: ", currentCity);
         		// console.log("rows:",currentCity.rows[0]);
         		// console.log("current city info - ",currentCity.rows[0].elements[0]);
@@ -60,7 +61,7 @@ function getNearestCity(userLat, userLong, distanceTraveled){
         		// console.log("current city: ",currentCity);
                 // console.log("current city destination address: ",currentCity.destination_addresses[0]);
                 // console.log("nearestCity status: ", currentCity.rows[0].elements[0].status);
-                console.log(currentCity.rows[0]);
+                console.log("Current city: ",currentCity.rows[0]);
                 var status = currentCity.rows[0].elements[0].status;
 
                 console.log("got status");
