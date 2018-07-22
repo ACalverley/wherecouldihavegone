@@ -7,7 +7,7 @@ let current_date = require("current-date");
 let FitbitApiClient = require("fitbit-node");
 let request = require('request-promise-native');
 let getNearestCity = require('./public/JS/run-radius-geocoder.js');
-let formatQuery = require('./public/JS/formatQuery.js');
+let formatQuery = require('./public/JS/formatQuery.js'); 
 let getLocation = require('./public/JS/location.js')
 let app = express();
 const port = process.env.PORT || 3000;
@@ -15,6 +15,8 @@ const api_key = process.env.GOOGLEMAPS_API_KEY; // config done in heroku
 const letsEncryptResponse = process.env.CERTBOT_RESPONSE
 const callbackURL = "http://www.wherecouldihavegone.com/callback";
 const devCallbackURL = "http://www.localhost:3000/callback";
+
+// console.log("Client ID: ",process.env.FITBIT_CLIENTID)
 
 // SSL Certificate
 /*
@@ -71,11 +73,14 @@ app.get('/callback', async function(req, res) {
 
     //var userPosition = getLocation.getLocationFromBrowser()
     //console.log(userPosition)
+
     //geoLocation Response needs to be bumped to HTML request from browser
     const geolocationResponse = JSON.parse(await request.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${api_key}`));
     console.log("geolocation response:", geolocationResponse);
+
     userLat = geolocationResponse.location.lat;
     userLong = geolocationResponse.location.lng;
+
     // res.send(`lat is: ${userLat}, long is: ${userLong}`);
 
     var user_nearestCity = await getNearestCity(userLat, userLong, distanceSum);
