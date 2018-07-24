@@ -36,4 +36,34 @@
    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9YrkTByrWhKXp8wNIQ5w6IgoiCD2ae0w&libraries=drawing&callback=initMap"
         async defer></script>
  </body>
+
+<!-- Grab Location From Browser -->
+<script type="text/javascript">
+function success(position) {
+    /*
+    axios.post('/userLocation', {
+        userLat: position.coords.latitude,
+        userLong: position.coords.longitude
+    }).then((response) => {
+        console.log(response);
+    }).catch((error) => {
+        console.log(error);
+    })
+    */
+    let userLat = position.coords.latitude;
+    let userLong = position.coords.longitude;
+    console.log(userLat);
+    console.log(userLong);
+}
+
+function error(msg) {
+    console.log(msg);
+}
+
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(success, error);
+} else {
+    error('Geolocation not supported on this browser.')
+}
+</script>
 </html>
