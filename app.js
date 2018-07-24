@@ -1,6 +1,7 @@
 //use express
 require('dotenv').config();
 let fs = require('fs');
+let bodyParser = require('body-parser');
 let express = require("express");
 let passport = require('passport');
 let current_date = require("current-date");
@@ -33,12 +34,18 @@ const credentials = {
 
 app.use(express.static(__dirname, { dotfiles: 'allow' } ));
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json());       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({extended: true})); // to support URL-encoded bodies
+app.use(express.json());
+app.use(express.urlencoded());
+// app.set('view engine', 'ejs');
 
 var resPath = "activities/distance/date/";
 var timePeriod;
 var url;
 var accessToken;
 var userLat, userLong;
+var distanceSum, user_destination, ugandaChild_destination, origin, ugandaChildDistance;
 
 const client = new FitbitApiClient({
   clientId: process.env.FITBIT_CLIENTID,
@@ -58,56 +65,81 @@ app.get("/authorize", (req, res) => {
   res.redirect(client.getAuthorizeUrl('activity location profile settings social weight', devCallbackURL, 'login'));
 });
 
-
 app.get('/callback', async function(req, res) {
-    const {access_token:accessToken} = await client.getAccessToken(req.query.code, devCallbackURL);
-    const date = current_date('date', '-');
-    const ugandaChildDistance = (3 * 30) * 12;
-    const url = `/activities/distance/date/${date}/3m.json`;
+  const {access_token:accessToken} = await client.getAccessToken(req.query.code, devCallbackURL);
+  const date = current_date('date', '-');
+  ugandaChildDistance = (3 * 30) * 12;
+  const url = `/activities/distance/date/${date}/3m.json`;
 
-    const [body, response] = await client.get(url, accessToken);
+  const [body, response] = await client.get(url, accessToken);
 
-    const distanceSum = body["activities-distance"].reduce((sum, {value})=>sum + Number(value), 0).toFixed(2);
+  distanceSum = body["activities-distance"].reduce((sum, {value})=>sum + Number(value), 0).toFixed(2);
 
-    console.log("distance sum: ", distanceSum);
-
-    //var userPosition = getLocation.getLocationFromBrowser()
-    //console.log(userPosition)
-
-    //geoLocation Response needs to be bumped to HTML request from browser
-    const geolocationResponse = JSON.parse(await request.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${api_key}`));
-    console.log("geolocation response:", geolocationResponse);
-
-    userLat = geolocationResponse.location.lat;
-    userLong = geolocationResponse.location.lng;
-
-    // res.send(`lat is: ${userLat}, long is: ${userLong}`);
-
-    var user_nearestCity = await getNearestCity(userLat, userLong, distanceSum);
-
-    var ugandaChild_nearestCity = await getNearestCity(userLat, userLong, ugandaChildDistance);
-
-    console.log("nearest city----------: ", user_nearestCity);
-
-    var user_destination = formatQuery(user_nearestCity.destination_addresses[0]);
-    var ugandaChild_destination = formatQuery(ugandaChild_nearestCity.destination_addresses[0]);
-    console.log(user_nearestCity.origin_addresses[0])
-    var origin = formatQuery(user_nearestCity.origin_addresses[0]);
-
-    console.log("user destination:", user_destination);
-    console.log("uganda child destination:", ugandaChild_destination);
-    console.log("origin: ", origin);
-
-    res.render("maps_2path.ejs", {
-    	distanceTraveled: distanceSum,
-      	userLat: userLat,
-      	userLong: userLong,
-      	user_destination: user_destination,
-      	ugandaChild_destination: ugandaChild_destination,
-      	origin: origin
-    });
+  res.render("getUserLocation.ejs", {distanceTraveled: distanceSum});
 });
 
+app.get('/mainPage', (req, res) => {
+  console.log("loading main page");
+
+  res.render("maps_2path.ejs", {
+      distanceTraveled: distanceSum,
+      userLat: userLat,
+      userLong: userLong,
+      user_destination: user_destination,
+      ugandaChild_destination: ugandaChild_destination,
+      origin: origin
+  });
+});
+
+app.post("/userLocation", async (req, res) => {
+  console.log("Lat: ", req.body.lat);
+  console.log("Long: ", req.body.long);
+
+  userLat = req.body.lat;
+  userLong = req.body.long;
+
+  // Moved to '/callback'
+  // const {access_token:accessToken} = await client.getAccessToken(req.query.code, devCallbackURL);
+  // const date = current_date('date', '-');
+  // const ugandaChildDistance = (3 * 30) * 12;
+  // const url = `/activities/distance/date/${date}/3m.json`;
+
+  // const [body, response] = await client.get(url, accessToken);
+
+  // const distanceSum = body["activities-distance"].reduce((sum, {value})=>sum + Number(value), 0).toFixed(2);
+
+  // console.log("distance sum: ", distanceSum);
+
+  //var userPosition = getLocation.getLocationFromBrowser()
+  //console.log(userPosition)
+
+  //OLD - geoLocation Response needs to be bumped to HTML request from browser
+  // const geolocationResponse = JSON.parse(await request.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${api_key}`));
+  // console.log("geolocation response:", geolocationResponse);
+
+  // userLat = geolocationResponse.location.lat;
+  // userLong = geolocationResponse.location.lng;
+
+  // res.send(`lat is: ${userLat}, long is: ${userLong}`);
+
+  var user_nearestCity = await getNearestCity(userLat, userLong, distanceSum);
+
+  var ugandaChild_nearestCity = await getNearestCity(userLat, userLong, ugandaChildDistance);
+
+  console.log("nearest city----------: ", user_nearestCity);
+
+  user_destination = formatQuery(user_nearestCity.destination_addresses[0]);
+  ugandaChild_destination = formatQuery(ugandaChild_nearestCity.destination_addresses[0]);
+  console.log(user_nearestCity.origin_addresses[0])
+
+  origin = formatQuery(user_nearestCity.origin_addresses[0]);
+
+  console.log("user destination:", user_destination);
+  console.log("uganda child destination:", ugandaChild_destination);
+  console.log("origin: ", origin);
+
+  res.redirect("/mainPage");
+});
 
 app.get("/getDistance", (req, res) => {
     client.get(url, accessToken).then(result => {
