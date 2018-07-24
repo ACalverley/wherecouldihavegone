@@ -12,6 +12,7 @@
     "aos": "^2.2.0",
     "async": "~0.2.8",
     "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
     "city-reverse-geocoder": "0.0.1",
     "current-date": "^0.1.1",
     "dotenv": "^6.0.0",
