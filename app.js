@@ -14,7 +14,7 @@ let app = express();
 const port = process.env.PORT || 3000;
 const api_key = process.env.GOOGLEMAPS_API_KEY; // config done in heroku
 const letsEncryptResponse = process.env.CERTBOT_RESPONSE
-const callbackURL = "http://www.wherecouldihavegone.com/callback";
+const callbackURL = "https://www.wherecouldihavegone.com/callback";
 const devCallbackURL = "http://www.localhost:3000/callback";
 
 // console.log("Client ID: ",process.env.FITBIT_CLIENTID)
@@ -62,11 +62,11 @@ const client = new FitbitApiClient({
 app.get("/authorize", (req, res) => {
   console.log("calling fitbit api");
     // request access to the user's activity, heartrate, location, nutrion, profile, settings, sleep, social, and weight scopes
-  res.redirect(client.getAuthorizeUrl('activity location profile settings social weight', devCallbackURL, 'login'));
+  res.redirect(client.getAuthorizeUrl('activity location profile settings social weight', callbackURL, 'login'));
 });
 
 app.get('/callback', async function(req, res) {
-  const {access_token:accessToken} = await client.getAccessToken(req.query.code, devCallbackURL);
+  const {access_token:accessToken} = await client.getAccessToken(req.query.code, callbackURL);
   const date = current_date('date', '-');
   ugandaChildDistance = (3 * 30) * 12;
   const url = `/activities/distance/date/${date}/3m.json`;
@@ -82,7 +82,7 @@ app.get('/mainPage', (req, res) => {
   console.log("loading main page");
 
   res.render("maps_2path.ejs", {
-      distanceTraveled: distanceSum,
+      distanceceTraveled: distanceSum,
       userLat: userLat,
       userLong: userLong,
       user_destination: user_destination,
