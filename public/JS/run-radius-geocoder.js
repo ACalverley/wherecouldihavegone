@@ -21,9 +21,6 @@ module.exports = function(userLat, userLong, distanceTraveled) {
             }
             origin_address = parsedBody.results[0].formatted_address
             console.log("origin address is: ", origin_address);
-
-
-            // res.render("test_maps.ejs",{origin_address: origin_address, destination_address: destination_address});
         });
     }
 }
