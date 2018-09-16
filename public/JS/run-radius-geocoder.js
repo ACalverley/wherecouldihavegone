@@ -19,11 +19,8 @@ module.exports = function(userLat, userLong, distanceTraveled) {
                 //Handle error
                 console.log(e);
             }
-            origin_address = parsedBody.results[0].formatted_address;
+            origin_address = parsedBody.results[0].formatted_address
             console.log("origin address is: ", origin_address);
-
-
-            // res.render("test_maps.ejs",{origin_address: origin_address, destination_address: destination_address});
         });
     }
 }
@@ -52,7 +49,10 @@ function getNearestCity(userLat, userLong, distanceTraveled){
         // Uncertain about Promise.all functionality
         // Uncertain about reduce(nearestCity, currentCity)
         return Promise.all(promises)
+            // iterate through elements in 'responses'
+            // use to prepare the array of values for processing 
         	.then((responses) => responses.map(o=>JSON.parse(o)))
+            // reduce(new var set equal to return of function inside .reduce(), next element in 'responses')
         	.then((responses) => responses.reduce((nearestCity, currentCity)=>{
         		// console.log("city: ", currentCity);
         		// console.log("rows:",currentCity.rows[0]);
