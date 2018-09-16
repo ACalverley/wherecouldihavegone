@@ -1,0 +1,7 @@
+{
+  "env": {
+    "FITBIT_CLIENTID":"@clientid",
+	"FITBIT_CLIENT_SECRET":"@clientsecret",
+	"GOOGLEMAPS_API_KEY":"@mapskey"
+  }
+}

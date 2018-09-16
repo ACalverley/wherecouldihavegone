@@ -1,28 +1,27 @@
 //use express
-require('dotenv').config();
+// require('dotenv').config()
+require('now-env');
 let fs = require('fs');
 let bodyParser = require('body-parser');
 let express = require("express");
 let passport = require('passport');
 let current_date = require("current-date");
 let FitbitApiClient = require("fitbit-node");
-let request = require('request-promise-native');
 let getNearestCity = require('./public/JS/run-radius-geocoder.js');
 let formatQuery = require('./public/JS/formatQuery.js');
 let getLocation = require('./public/JS/location.js')
 let app = express();
 const port = process.env.PORT || 3000;
 const api_key = process.env.GOOGLEMAPS_API_KEY; // config done in heroku
-const callbackURL = "https://www.wherecouldihavegone.com/callback";
-const devCallbackURL = "http://www.localhost:3000/callback";
+const callbackURL = "https://wherecouldihavegone.com/fitbitCallback";
+const devCallbackURL = "http://www.localhost:3000/fitbitCallback";
+
+// console.log("Client ID: ",process.env.FITBIT_CLIENTID)
 
 app.use(express.static(__dirname, { dotfiles: 'allow' } ));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({extended: true})); // to support URL-encoded bodies
-app.use(express.json());
-app.use(express.urlencoded());
-// app.set('view engine', 'ejs');
 
 var resPath = "activities/distance/date/";
 var timePeriod;
@@ -44,7 +43,7 @@ app.get("/authorize", (req, res) => {
   res.redirect(client.getAuthorizeUrl('activity location profile settings social weight', callbackURL, 'login'));
 });
 
-app.get('/callback', async function(req, res) {
+app.get('/fitbitCallback', async function(req, res) {
   const {access_token:accessToken} = await client.getAccessToken(req.query.code, callbackURL);
   const date = current_date('date', '-');
   ugandaChildDistance = (3 * 30) * 12;
