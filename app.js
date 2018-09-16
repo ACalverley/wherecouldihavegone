@@ -8,7 +8,7 @@ let current_date = require("current-date");
 let FitbitApiClient = require("fitbit-node");
 let request = require('request-promise-native');
 let getNearestCity = require('./public/JS/run-radius-geocoder.js');
-let formatQuery = require('./public/JS/formatQuery.js'); 
+let formatQuery = require('./public/JS/formatQuery.js');
 let getLocation = require('./public/JS/location.js')
 let app = express();
 const port = process.env.PORT || 3000;
@@ -62,11 +62,11 @@ const client = new FitbitApiClient({
 app.get("/authorize", (req, res) => {
   console.log("calling fitbit api");
     // request access to the user's activity, heartrate, location, nutrion, profile, settings, sleep, social, and weight scopes
-  res.redirect(client.getAuthorizeUrl('activity location profile settings social weight', callbackURL, 'login'));
+  res.redirect(client.getAuthorizeUrl('activity location profile settings social weight', devCallbackURL, 'login'));
 });
 
 app.get('/callback', async function(req, res) {
-  const {access_token:accessToken} = await client.getAccessToken(req.query.code, callbackURL);
+  const {access_token:accessToken} = await client.getAccessToken(req.query.code, devCallbackURL);
   const date = current_date('date', '-');
   ugandaChildDistance = (3 * 30) * 12;
   const url = `/activities/distance/date/${date}/3m.json`;
@@ -82,7 +82,7 @@ app.get('/mainPage', (req, res) => {
   console.log("loading main page");
 
   res.render("maps_2path.ejs", {
-      distanceceTraveled: distanceSum,
+      distanceTraveled: distanceSum,
       userLat: userLat,
       userLong: userLong,
       user_destination: user_destination,
@@ -97,30 +97,6 @@ app.post("/userLocation", async (req, res) => {
 
   userLat = req.body.lat;
   userLong = req.body.long;
-
-  // Moved to '/callback'
-  // const {access_token:accessToken} = await client.getAccessToken(req.query.code, devCallbackURL);
-  // const date = current_date('date', '-');
-  // const ugandaChildDistance = (3 * 30) * 12;
-  // const url = `/activities/distance/date/${date}/3m.json`;
-
-  // const [body, response] = await client.get(url, accessToken);
-
-  // const distanceSum = body["activities-distance"].reduce((sum, {value})=>sum + Number(value), 0).toFixed(2);
-
-  // console.log("distance sum: ", distanceSum);
-
-  //var userPosition = getLocation.getLocationFromBrowser()
-  //console.log(userPosition)
-
-  //OLD - geoLocation Response needs to be bumped to HTML request from browser
-  // const geolocationResponse = JSON.parse(await request.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${api_key}`));
-  // console.log("geolocation response:", geolocationResponse);
-
-  // userLat = geolocationResponse.location.lat;
-  // userLong = geolocationResponse.location.lng;
-
-  // res.send(`lat is: ${userLat}, long is: ${userLong}`);
 
   var user_nearestCity = await getNearestCity(userLat, userLong, distanceSum);
 

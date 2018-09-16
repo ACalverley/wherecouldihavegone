@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="img/footprints.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <script type="text/javascript" async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9YrkTByrWhKXp8wNIQ5w6IgoiCD2ae0w&libraries=drawing&callback=initMaps"></script>
+    <script type="text/javascript" async defer src="https://maps.googleapis.com/maps/api/js?key=<%=process.env.GOOGLEMAPS_API_KEY%>&libraries=drawing&callback=initMaps"></script>
 
     <script>
         var map;
