@@ -13,24 +13,8 @@ let getLocation = require('./public/JS/location.js')
 let app = express();
 const port = process.env.PORT || 3000;
 const api_key = process.env.GOOGLEMAPS_API_KEY; // config done in heroku
-const letsEncryptResponse = process.env.CERTBOT_RESPONSE
 const callbackURL = "https://www.wherecouldihavegone.com/callback";
 const devCallbackURL = "http://www.localhost:3000/callback";
-
-// console.log("Client ID: ",process.env.FITBIT_CLIENTID)
-
-// SSL Certificate
-/*
-const privateKey = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/cert.pem', 'utf8');
-const ca = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/chain.pem', 'utf8');
-
-const credentials = {
-	key: privateKey,
-	cert: certificate,
-	ca: ca
-};
-*/
 
 app.use(express.static(__dirname, { dotfiles: 'allow' } ));
 app.use(express.static(__dirname + '/public'));
@@ -53,20 +37,15 @@ const client = new FitbitApiClient({
   apiVersion: '1.2' // 1.2 is the default
 });
 
-// Return the Let's Encrypt certbot response:
-//app.get('/.well-known/acme-challenge/:content', function(req, res) {
-//  res.send(letsEncryptReponse);
-//});
-
 // redirect the user to the Fitbit authorization page
 app.get("/authorize", (req, res) => {
   console.log("calling fitbit api");
     // request access to the user's activity, heartrate, location, nutrion, profile, settings, sleep, social, and weight scopes
-  res.redirect(client.getAuthorizeUrl('activity location profile settings social weight', devCallbackURL, 'login'));
+  res.redirect(client.getAuthorizeUrl('activity location profile settings social weight', callbackURL, 'login'));
 });
 
 app.get('/callback', async function(req, res) {
-  const {access_token:accessToken} = await client.getAccessToken(req.query.code, devCallbackURL);
+  const {access_token:accessToken} = await client.getAccessToken(req.query.code, callbackURL);
   const date = current_date('date', '-');
   ugandaChildDistance = (3 * 30) * 12;
   const url = `/activities/distance/date/${date}/3m.json`;
