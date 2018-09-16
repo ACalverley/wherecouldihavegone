@@ -20,10 +20,11 @@
     "express": "^4.16.3",
     "express-http-to-https": "^1.1.4",
     "fitbit-node": "^2.1.0",
-    "nodemon": "^1.18.3",
+    "nodemon": "^1.18.4",
+    "now-env": "^3.1.0",
     "passport": "^0.4.0",
     "raw-body": "^2.3.3",
-    "request": "^2.87.0",
+    "request": "^2.88.0",
     "request-promise-native": "^1.0.5"
   },
   "scripts": {
