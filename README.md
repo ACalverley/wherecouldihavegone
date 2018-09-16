@@ -19,7 +19,7 @@ And what if you had just started walking, without turning back... **_Where could
 
 Data and technology can put a lot in perspective. We wanted to exploit the natural craving for personalized data visualization to better tell a story, through contrast, about the extent Ugandan children have to walk to get an education.
 
-- [ ] Add screenshot of comparisons
+![View of Web App](https://i.imgur.com/sncBL40.png)
 
 ## Take a Moment to Think
 
