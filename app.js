@@ -1,5 +1,5 @@
 //use express
-// require('dotenv').config()
+require('dotenv').config()
 require('now-env');
 let fs = require('fs');
 let bodyParser = require('body-parser');
@@ -7,14 +7,17 @@ let express = require("express");
 let passport = require('passport');
 let current_date = require("current-date");
 let FitbitApiClient = require("fitbit-node");
-let getNearestCity = require('./public/JS/run-radius-geocoder.js');
+let geoLocation = require('./public/JS/run-radius-geocoder.js');
 let formatQuery = require('./public/JS/formatQuery.js');
 let getLocation = require('./public/JS/location.js')
 let app = express();
 const port = process.env.PORT || 3000;
 const api_key = process.env.GOOGLEMAPS_API_KEY; // config done in heroku
 const callbackURL = "https://wherecouldihavegone.com/fitbitCallback";
-const devCallbackURL = "http://www.localhost:3000/fitbitCallback";
+const devCallbackURL = "http://localhost:3000/fitbitCallback";
+
+let getNearestCity = geoLocation.getNearestCity;
+let getUserAddress = geoLocation.getUserAddress;
 
 // console.log("Client ID: ",process.env.FITBIT_CLIENTID)
 
@@ -29,6 +32,7 @@ var url;
 var accessToken;
 var userLat, userLong;
 var distanceSum, user_destination, ugandaChild_destination, origin, ugandaChildDistance;
+ugandaChildDistance = (3 * 30) * 12;
 
 const client = new FitbitApiClient({
   clientId: process.env.FITBIT_CLIENTID,
@@ -43,7 +47,7 @@ app.get("/authorize", (req, res) => {
   res.redirect(client.getAuthorizeUrl('activity location profile settings social weight', callbackURL, 'login'));
 });
 
-app.get('/fitbitCallback', async function(req, res) {
+app.get('/fitbitCallback', async (req, res) => {
   const {access_token:accessToken} = await client.getAccessToken(req.query.code, callbackURL);
   const date = current_date('date', '-');
   ugandaChildDistance = (3 * 30) * 12;
@@ -53,13 +57,14 @@ app.get('/fitbitCallback', async function(req, res) {
 
   distanceSum = body["activities-distance"].reduce((sum, {value})=>sum + Number(value), 0).toFixed(2);
 
-  res.render("getUserLocation.ejs", {distanceTraveled: distanceSum});
+  res.redirect('/findCities');
 });
+
 
 app.get('/mainPage', (req, res) => {
   console.log("loading main page");
 
-  res.render("maps_2path.ejs", {
+  res.render("maps_2path_new.ejs", {
       distanceTraveled: distanceSum,
       userLat: userLat,
       userLong: userLong,
@@ -69,29 +74,48 @@ app.get('/mainPage', (req, res) => {
   });
 });
 
-app.post("/userLocation", async (req, res) => {
+
+app.post("/userLocation", (req, res) => {
   console.log("Lat: ", req.body.lat);
   console.log("Long: ", req.body.long);
 
   userLat = req.body.lat;
   userLong = req.body.long;
+  const isDemo = req.body.isDemo;
+  
+  // when Demo button is clicked!
+  if (isDemo == 1) {
+    distanceSum = 63.7;
+    res.redirect('/findCities');
+  } else {
+    console.log("calling authorize");
+    res.redirect('/authorize');
+  }
+});
+
+app.get("/findCities", async (req, res) => {
 
   var user_nearestCity = await getNearestCity(userLat, userLong, distanceSum);
 
+  if (user_nearestCity == null){
+    console.log("fitbit has 0 distance travelled");
+    origin = await getUserAddress(userLat, userLong);
+    console.log(origin);
+    user_destination = origin;
+  } else {
+    user_destination = formatQuery(user_nearestCity.destination_addresses[0]);
+    origin = formatQuery(user_nearestCity.origin_addresses[0]);
+  }
+
   var ugandaChild_nearestCity = await getNearestCity(userLat, userLong, ugandaChildDistance);
-
-  console.log("nearest city----------: ", user_nearestCity);
-
-  user_destination = formatQuery(user_nearestCity.destination_addresses[0]);
   ugandaChild_destination = formatQuery(ugandaChild_nearestCity.destination_addresses[0]);
-  console.log(user_nearestCity.origin_addresses[0])
-
-  origin = formatQuery(user_nearestCity.origin_addresses[0]);
-
+  
+  console.log("nearest city----------: ", user_destination);
+ 
   console.log("user destination:", user_destination);
   console.log("uganda child destination:", ugandaChild_destination);
   console.log("origin: ", origin);
-
+  
   res.redirect("/mainPage");
 });
 
