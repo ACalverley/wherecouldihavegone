@@ -1,7 +1,9 @@
 {
-  "env": {
-    "FITBIT_CLIENTID":"@clientid",
-	"FITBIT_CLIENT_SECRET":"@clientsecret",
-	"GOOGLEMAPS_API_KEY":"@mapskey"
+	"version": 2,
+	"builds" : [{ "src": "package.json", "use": "@now/static-build" }],
+  	"env": {
+	    "FITBIT_CLIENTID":"@clientid",
+		"FITBIT_CLIENT_SECRET":"@clientsecret",
+		"GOOGLEMAPS_API_KEY":"@mapskey"
   }
 }
