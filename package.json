@@ -11,7 +11,7 @@
   "dependencies": {
     "aos": "^2.3.4",
     "async": "~0.2.8",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "city-reverse-geocoder": "0.0.1",
     "current-date": "^0.1.1",
